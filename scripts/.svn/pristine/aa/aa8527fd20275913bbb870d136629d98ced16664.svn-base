@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+class RandPerm
+    def self.randPerm(lst)
+        ret = ''
+        while not lst.empty? do
+            i = rand(lst.size)
+            item = lst[i]
+            lst.delete(item)
+            ret += item + ' '
+        end
+        return ret
+    end
+end
+
+if __FILE__ == $0
+    puts RandPerm::randPerm ARGV
+end

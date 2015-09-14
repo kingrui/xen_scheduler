@@ -1,0 +1,17 @@
+summary.res_1016	10.16 with patch and scheduler *4
+summary.res_1017	10.17 with patch and scheduler *6
+summary.res_1018	10.18 no patch and no scheduler *6
+summary.res_1029	10.29 no patch and no scheduler *4
+summary.res_1029_2	10.29 no patch and no scheduler *4
+summary.res_1029_3	10.29 with patch  no scheduler *4
+summary.res_1029_4	10.29 with patch  with scheduler *4	cg cg cg cg
+summary.res_1029_5	10.29 no patch  no scheduler *4		lu lu lu lu
+summary.res_1029_6	10.29 no patch  no scheduler *4		cg cg cg cg
+summary.res_1030_1	10.30 no patch  no scheduler *4		sp sp cg cg
+summary.res_1030_2	10.30 with patch with scheduler *4	sp sp cg cg
+summary.res_1030_3	10.30 with patch with scheduler *4	sp lu cg cg
+summary.res_1030_4	10.30 no patch no scheduler *4		sp lu cg cg
+summary.res_1030_5	10.30 no patch no scheduler *4		sp bt cg cg
+summary.res_1030_6	10.30 with patch with scheduler *4	sp bt cg cg
+summary.res_1031_1	10.31 with patch with scheduler *4	sp lu lu cg
+summary.res_1031_2	10.31 no patch no scheduler *4		sp lu lu cg

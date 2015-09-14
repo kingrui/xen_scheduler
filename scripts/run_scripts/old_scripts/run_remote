@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+if __FILE__ == $0
+  runs = {
+           2 => ['is', 'B'],
+           3 => ['lu', 'B'],
+           4 => ['ep', 'B'],
+           5 => ['lu', 'B'],
+#           6 => ['mg', 'B'],
+#           7 => ['bt', 'B'],
+#           8 => ['ft', 'B'],
+#           9 => ['sp', 'B'],
+
+#          0 => ['lu', 'B'],
+#          1 => ['lu', 'B'],
+          #12 => ['bt', 'B'],
+          #13 => ['sp', 'B'],
+
+#          2 => ['lu','B'],
+#          6 => ['lu','B'],
+  }
+  user = 'root'
+  runs.each do |ip, bench|
+    cmd = "ssh #{user}@10.214.0.8#{ip} \"cd ~/scripts/run_scripts; nohup ./run_npb mpi one '#{bench[0]}' #{bench[1]} 4 ~/NPB3.3-MPI &> /tmp/npb-mpi.log;\""
+    puts cmd
+    system(cmd)
+  end
+end

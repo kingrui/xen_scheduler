@@ -1,0 +1,3337 @@
+#!/bin/bash
+
+source ../common/functions.sh
+
+
+    rm /tmp/run.log
+    echo "ft lu ep bt | cg is sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,lu,ep,bt-cg,is,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft cg sp bt | lu is ep mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,cg,sp,bt-lu,is,ep,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is ep mg | lu ft cg bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="is,ep,mg-lu,ft,cg,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft lu cg bt | is ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,lu,cg,bt-is,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg bt mg | lu ft is ep sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="cg,bt,mg-lu,ft,is,ep,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu ep | ft cg is bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,ep-ft,cg,is,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is sp mg | lu ft cg ep bt" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+	wait
+	res="is,sp,mg-lu,ft,cg,ep,bt.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg sp | lu ft is ep bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="cg,sp-lu,ft,is,ep,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu is mg | ft cg ep bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="lu,is,mg-ft,cg,ep,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg ep | lu ft is bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="cg,ep-lu,ft,is,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is cg mg | lu ft ep bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="is,cg,mg-lu,ft,ep,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is ep sp bt | lu ft cg mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,ep,sp,bt-lu,ft,cg,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu sp bt | ft cg is ep mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,sp,bt-ft,cg,is,ep,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft sp | lu cg is ep bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,sp-lu,cg,is,ep,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft is bt mg | lu cg ep sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="ft,is,bt,mg-lu,cg,ep,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu cg bt mg | ft is ep sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="lu,cg,bt,mg-ft,is,ep,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "bt mg | lu ft cg is ep sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="bt,mg-lu,ft,cg,is,ep,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft cg mg | lu is ep bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="ft,cg,mg-lu,is,ep,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is cg sp bt | lu ft ep mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,cg,sp,bt-lu,ft,ep,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft is | lu cg ep bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,is-lu,cg,ep,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ep sp bt mg | lu ft cg is" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+	wait
+	res="ep,sp,bt,mg-lu,ft,cg,is.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is cg | lu ft ep bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,cg-lu,ft,ep,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft is ep | lu cg bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,is,ep-lu,cg,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu cg ep bt | ft is sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,cg,ep,bt-ft,is,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft lu sp | cg is ep bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,lu,sp-cg,is,ep,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "sp bt | lu ft cg is ep mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="sp,bt-lu,ft,cg,is,ep,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ep bt | lu ft cg is sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ep,bt-lu,ft,cg,is,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is cg ep bt | lu ft sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,cg,ep,bt-lu,ft,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg ep bt | lu ft is sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="cg,ep,bt-lu,ft,is,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu is ep bt | ft cg sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,is,ep,bt-ft,cg,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft lu | cg is ep bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,lu-cg,is,ep,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu cg ep | ft is bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,cg,ep-ft,is,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu sp | ft cg is ep bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,sp-ft,cg,is,ep,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ep sp | lu ft cg is bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ep,sp-lu,ft,cg,is,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft is sp | lu cg ep bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,is,sp-lu,cg,ep,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft sp bt mg | lu cg is ep" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+	wait
+	res="ft,sp,bt,mg-lu,cg,is,ep.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft cg bt mg | lu is ep sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="ft,cg,bt,mg-lu,is,ep,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft bt mg | lu cg is ep sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="ft,bt,mg-lu,cg,is,ep,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft lu is | cg ep bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,lu,is-cg,ep,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu is | ft cg ep bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,is-ft,cg,ep,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft cg ep | lu is bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,cg,ep-lu,is,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu cg bt | ft is ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,cg,bt-ft,is,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu cg sp | ft is ep bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,cg,sp-ft,is,ep,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is bt mg | lu ft cg ep sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="is,bt,mg-lu,ft,cg,ep,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is sp bt | lu ft cg ep mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,sp,bt-lu,ft,cg,ep,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft cg sp | lu is ep bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,cg,sp-lu,is,ep,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft ep bt mg | lu cg is sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="ft,ep,bt,mg-lu,cg,is,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft lu ep | cg is bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,lu,ep-cg,is,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu cg | ft is ep bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,cg-ft,is,ep,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu cg sp bt | ft is ep mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,cg,sp,bt-ft,is,ep,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft lu cg | is ep bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,lu,cg-is,ep,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ep sp bt | lu ft cg is mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ep,sp,bt-lu,ft,cg,is,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is sp | lu ft cg ep bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,sp-lu,ft,cg,ep,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ep mg | lu ft cg is bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="ep,mg-lu,ft,cg,is,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu ep sp | ft cg is bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,ep,sp-ft,cg,is,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft lu is bt | cg ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,lu,is,bt-cg,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft ep sp | lu cg is bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,ep,sp-lu,cg,is,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is ep | lu ft cg bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,ep-lu,ft,cg,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu is cg | ft ep bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,is,cg-ft,ep,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft cg | lu is ep bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,cg-lu,is,ep,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu is sp bt | ft cg ep mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,is,sp,bt-ft,cg,ep,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is ep bt | lu ft cg sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,ep,bt-lu,ft,cg,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft is bt | lu cg ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,is,bt-lu,cg,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg ep sp | lu ft is bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="cg,ep,sp-lu,ft,is,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu bt mg | ft cg is ep sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="lu,bt,mg-ft,cg,is,ep,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft ep bt | lu cg is sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,ep,bt-lu,cg,is,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "sp mg | lu ft cg is ep bt" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+	wait
+	res="sp,mg-lu,ft,cg,is,ep,bt.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg bt | lu ft is ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="cg,bt-lu,ft,is,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is cg sp | lu ft ep bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,cg,sp-lu,ft,ep,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft sp bt | lu cg is ep mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,sp,bt-lu,cg,is,ep,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft is cg bt | lu ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,is,cg,bt-lu,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg ep bt mg | lu ft is sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="cg,ep,bt,mg-lu,ft,is,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu sp mg | ft cg is ep bt" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+	wait
+	res="lu,sp,mg-ft,cg,is,ep,bt.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu is cg bt | ft ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,is,cg,bt-ft,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg mg | lu ft is ep bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="cg,mg-lu,ft,is,ep,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu bt | ft cg is ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,bt-ft,cg,is,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ep bt mg | lu ft cg is sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="ep,bt,mg-lu,ft,cg,is,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft is ep bt | lu cg sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,is,ep,bt-lu,cg,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu ep sp bt | ft cg is mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,ep,sp,bt-ft,cg,is,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is ep sp | lu ft cg bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,ep,sp-lu,ft,cg,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is cg bt mg | lu ft ep sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="is,cg,bt,mg-lu,ft,ep,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu is bt | ft cg ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,is,bt-ft,cg,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is ep bt mg | lu ft cg sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="is,ep,bt,mg-lu,ft,cg,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "sp bt mg | lu ft cg is ep" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+	wait
+	res="sp,bt,mg-lu,ft,cg,is,ep.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu is bt mg | ft cg ep sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="lu,is,bt,mg-ft,cg,ep,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is bt | lu ft cg ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,bt-lu,ft,cg,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft cg ep bt | lu is sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,cg,ep,bt-lu,is,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft mg | lu cg is ep bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="ft,mg-lu,cg,is,ep,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft lu bt | cg is ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,lu,bt-cg,is,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg sp bt mg | lu ft is ep" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+	wait
+	res="cg,sp,bt,mg-lu,ft,is,ep.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is cg ep | lu ft bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,cg,ep-lu,ft,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft sp mg | lu cg is ep bt" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+	wait
+	res="ft,sp,mg-lu,cg,is,ep,bt.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft lu bt mg | cg is ep sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="ft,lu,bt,mg-cg,is,ep,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft is cg | lu ep bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,is,cg-lu,ep,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg ep sp bt | lu ft is mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="cg,ep,sp,bt-lu,ft,is,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft is sp bt | lu cg ep mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,is,sp,bt-lu,cg,ep,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft ep | lu cg is bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,ep-lu,cg,is,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu mg | ft cg is ep bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="lu,mg-ft,cg,is,ep,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu sp bt mg | ft cg is ep" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+	wait
+	res="lu,sp,bt,mg-ft,cg,is,ep.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft cg bt | lu is ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,cg,bt-lu,is,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu ep mg | ft cg is bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="lu,ep,mg-ft,cg,is,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg ep mg | lu ft is bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="cg,ep,mg-lu,ft,is,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu is ep | ft cg bt sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,is,ep-ft,cg,bt,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu ep bt mg | ft cg is sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="lu,ep,bt,mg-ft,cg,is,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu is sp | ft cg ep bt mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,is,sp-ft,cg,ep,bt,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is cg bt | lu ft ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="is,cg,bt-lu,ft,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft lu sp bt | cg is ep mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,lu,sp,bt-cg,is,ep,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ep sp mg | lu ft cg is bt" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+	wait
+	res="ep,sp,mg-lu,ft,cg,is,bt.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft lu mg | cg is ep bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="ft,lu,mg-cg,is,ep,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft ep sp bt | lu cg is mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,ep,sp,bt-lu,cg,is,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu cg mg | ft is ep bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="lu,cg,mg-ft,is,ep,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is sp bt mg | lu ft cg ep" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+	wait
+	res="is,sp,bt,mg-lu,ft,cg,ep.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg sp mg | lu ft is ep bt" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+	wait
+	res="cg,sp,mg-lu,ft,is,ep,bt.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft is mg | lu cg ep bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="ft,is,mg-lu,cg,ep,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "cg sp bt | lu ft is ep mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="cg,sp,bt-lu,ft,is,ep,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "is mg | lu ft cg ep bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="is,mg-lu,ft,cg,ep,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft ep mg | lu cg is bt sp" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+	wait
+	res="ft,ep,mg-lu,cg,is,bt,sp.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "lu ep bt | ft cg is sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="lu,ep,bt-ft,cg,is,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+
+    rm /tmp/run.log
+    echo "ft bt | lu cg is ep sp mg" >> /tmp/run.log
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ft.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ft-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/bt.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-bt-B-1-bind.txt" &
+    
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/lu.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-lu-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/cg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-cg-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/is.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-is-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/ep.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-ep-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/sp.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-sp-B-1-bind.txt" &
+    
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "/home/user189/NPB3.3/NPB3.3-MPI/bin/mg.B.1" > "/home/user189/NPB3.3/NPB3.3-MPI/output/mpi-mg-B-1-bind.txt" &
+    
+	wait
+	res="ft,bt-lu,cg,is,ep,sp,mg.tar.bz2"
+	pushd "/home/user189/NPB3.3/NPB3.3-MPI/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "/home/user189/NPB3.3/NPB3.3-MPI/output/$res" output
+

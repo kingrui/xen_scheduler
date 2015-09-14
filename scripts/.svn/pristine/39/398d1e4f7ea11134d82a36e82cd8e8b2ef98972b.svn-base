@@ -1,0 +1,80 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+
+require '../common/npb'
+require '../common/matfig'
+
+def genFigureRatio(info, tgt, benchs, names, outdir, type, mse)
+  names.each do |name|
+    mname = "tog_tog_#{type}_#{name}"
+    data = Hash.new
+    mse_data = Hash.new
+    info.each do |tag, run|
+      data[tag] = benchs.map do |b|
+        c = run[b][name].to_f
+        t = tgt[b][name].to_f
+        puts "#{name} #{c} #{t}"
+        (c - t) / t * 100
+      end
+      mse_data[tag] = benchs.map { |b| 100*mse[tag][b][name].to_f/tgt[b][name].to_f }
+    end
+    Matfig.bar data, benchs, 'Benchmarks', "Change of #{name} #{type} (%)",
+      mname, outdir, mse_data
+  end
+end
+
+def genFigureAbs(info, benchs, names, outdir, type)
+  names.each do |name|
+    mname = "tog_tog_#{type}_#{name}"
+    data = Hash.new
+    info.each do |tag, run|
+      data[tag] = benchs.map { |b| run[b][name].to_f }
+    end
+    Matfig.bar data, benchs, 'Benchmarks', "#{type} of #{name}", mname,
+      outdir
+  end
+end
+
+
+if __FILE__ == $0
+  if ARGV.length != 1 
+    $stderr.puts "Generate figure to compare different clavis algs."
+    $stderr.print "Usage:\n#{File.basename $0} config_file\n"
+    exit
+  end
+
+  config_file = ARGV[0]
+
+  config  = YAML.load_file(config_file)
+  togdirs = config['togdirs']
+  outdir  = config['outdir']
+  bentype = config['bench-type']
+  cls     = config['class']
+  extra   = config['extra']
+  nprocs  = config['nprocs']
+  benchs  = config['benchs']
+
+  tgt_extra = 'free'#'free'
+  tgt_tag   = 'default'
+
+  names  = NPB::get_names bentype
+
+  avg = Hash.new
+  mse = Hash.new
+
+  avg_tgt, mse[tgt_tag] = NPB::tog_info bentype, outdir, benchs, cls,
+    nprocs, names, tgt_extra
+
+
+  togdirs.each do |tag, dir|
+    avg[tag], mse[tag] = NPB::tog_info bentype, dir,
+      benchs, cls, nprocs, names, extra
+  end
+  puts mse
+
+  genFigureRatio avg, avg_tgt, benchs, names, outdir, 'Average', mse
+  genFigureAbs   mse, benchs, names, outdir, 'MSE'
+
+end
+

@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+import sys, os
+
+ips = ["10.214.0.2", "10.214.0.3"]
+pgm = ['bt', 'ft']
+base_dir = 'imp_data'
+
+if __name__ == "__main__":
+    os.system("""
+        cd ./%s;
+        echo '********************' >>dump.dat;
+        """
+        % (base_dir)
+    )
+    for i in range(0, 2):
+        output = os.popen("""
+            ssh user136@%s 'cd /home/user136/NPB3.3-MPI/output; ls -t | head -n1';
+            """
+            %(ips[i])
+        )
+        filename = output.read().strip('\n')
+        output = os.popen("""
+            cd ./%s;
+            scp user136@%s:/home/user136/NPB3.3-MPI/output/%s .; 
+            cat %s | grep 'Time in seconds';
+            """
+            % (base_dir, ips[i], filename, filename)
+        )
+        cstime = output.read().strip('\n')
+        os.system("""
+            cd ./%s;
+            echo '%s(host:%s):%s' >> dump.dat;
+            echo '%s';
+            rm -f *.txt;
+            """
+            % (base_dir, pgm[i], ips[i],cstime,cstime)
+            )

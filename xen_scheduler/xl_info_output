@@ -1,0 +1,63 @@
+host                   : ubuntu-189
+release                : 3.8.0-35-generic
+version                : #50~precise1-Ubuntu SMP Wed Dec 4 17:25:51 UTC 2013
+machine                : x86_64
+nr_cpus                : 32
+nr_nodes               : 4
+cores_per_socket       : 4
+threads_per_core       : 2
+cpu_mhz                : 1862
+hw_caps                : bfebfbff:28100800:00000000:00003b40:00bce3bd:00000000:00000001:00000000
+virt_caps              : hvm hvm_directio
+total_memory           : 65522
+free_memory            : 128
+free_cpus              : 0
+cpu_topology           :
+cpu:    core    socket     node
+  0:       0        0        0
+  1:       0        0        0
+  2:       3        0        0
+  3:       3        0        0
+  4:       8        0        0
+  5:       8        0        0
+  6:      11        0        0
+  7:      11        0        0
+  8:       1        1        1
+  9:       1        1        1
+ 10:       2        1        1
+ 11:       2        1        1
+ 12:       9        1        1
+ 13:       9        1        1
+ 14:      10        1        1
+ 15:      10        1        1
+ 16:       0        2        2
+ 17:       0        2        2
+ 18:       3        2        2
+ 19:       3        2        2
+ 20:       8        2        2
+ 21:       8        2        2
+ 22:      11        2        2
+ 23:      11        2        2
+ 24:       1        3        3
+ 25:       1        3        3
+ 26:       2        3        3
+ 27:       2        3        3
+ 28:       9        3        3
+ 29:       9        3        3
+ 30:      10        3        3
+ 31:      10        3        3
+numa_info              : none
+xen_major              : 4
+xen_minor              : 1
+xen_extra              : .2
+xen_caps               : xen-3.0-x86_64 xen-3.0-x86_32p hvm-3.0-x86_32 hvm-3.0-x86_32p hvm-3.0-x86_64 
+xen_scheduler          : credit
+xen_pagesize           : 4096
+platform_params        : virt_start=0xffff800000000000
+xen_changeset          : unavailable
+xen_commandline        : placeholder
+cc_compiler            : gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) 
+cc_compile_by          : root
+cc_compile_domain      : 
+cc_compile_date        : Tue Dec 17 22:38:24 HKT 2013
+xend_config_format     : 4

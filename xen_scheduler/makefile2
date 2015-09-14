@@ -1,0 +1,4 @@
+XEN_ROOT="/root/xen-4.1.2"
+.PHONY:aa
+aa:Main.cpp SysInfo.cpp SysInfo.h Scheduler.cpp Scheduler.h kmeans.cpp kmeans.h runnable.cpp runnable.h 
+	g++ -o aa -std=c++11 Main.cpp SysInfo.cpp SysInfo.h Scheduler.cpp Scheduler.h kmeans.cpp kmeans.h runnable.cpp runnable.h  -lvirt -lxenctrl -pthread -D_GLIBCXX_USE_NANOSLEEP

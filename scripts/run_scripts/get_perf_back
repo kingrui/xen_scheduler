@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+import sys, os
+
+base_dir = 'perftest'
+
+def read_config(pgm, ip, scale, ttype):
+#    f = open('./run.config', 'r')
+    f = open(sys.argv[1],'r')
+    init = True
+    for line in f.readlines():
+        tmp = line.strip('\n').split(' ')
+        if init:
+            ttype.append(tmp[0])
+            init = False
+        else:
+            pgm.append(tmp[0])
+            scale.append(tmp[1])
+            ip.append(tmp[2])
+    f.close()
+
+
+if __name__ == "__main__":
+    ip = []
+    pgm = []
+    scale = []
+    ttype = []
+    read_config(pgm, ip, scale, ttype)
+    os.system("""
+        cd ./%s;
+        echo '--------------------' >> summary.res;
+        """
+        % (base_dir)
+    )
+    for i in range(0, len(pgm)):
+#        output = os.popen("""
+#            ssh -q -o StrictHostKeyChecking=no root@%s 'cd /home/user136/NPB3.3-MPI/output; 
+#            ls -t | head -n1';
+#            """
+#            %(ip[i])
+#        )
+#        filename = output.read().strip('\n')
+#        print filename
+        output = os.popen("""
+            cd ./%s;
+            scp root@%s:~/NPB3.3/NPB3.3-%s/output/%s-%s-%s-4-free.txt .; 
+            cat %s-%s-%s-4-free.txt | grep 'Time in seconds' | cut -c38-;
+            rm *free.txt;
+            """
+            % (base_dir, ip[i], ttype[0].upper(), ttype[0], pgm[i], scale[i], ttype[0], pgm[i], scale[i])
+        )
+#       tar -xf %s;
+#       rm %s
+        perftime = output.read().strip('\n')
+        os.system("""
+            cd ./%s;
+            echo '%s: time:%s' >> summary.res;
+            echo '%s';
+            """
+            % (base_dir, pgm[i], perftime, perftime)
+        )
+
+    
+
+

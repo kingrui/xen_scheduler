@@ -1,0 +1,6 @@
+#!/bin/bash
+for((j=10;j<=17;j++))
+do
+    scp -r bin root@192.168.1.2$j:/root/NPB3.3/NPB3.3-MPI/
+done
+exit 0

@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require 'erb'
+require 'set'
+
+BEN_DIR = "/home/user183/NPB3.3/NPB3.3-MPI"
+
+if __FILE__ == $0
+  benchs = ARGV[0].split(' ')
+  coms = Set.new
+  (1..benchs.size/2).each do |n|
+    benchs.combination(n).each do |com|
+      coms << com unless coms.member?(benchs - com)
+    end
+  end
+  File.open("run-com", "w") do |f|
+    f.puts(ERB.new(IO.read("../templates/run-com.erb")).result(binding))
+  end
+  system("chmod +x run-com")
+  system("./run-com")
+end

@@ -1,0 +1,11 @@
+#!/bin/bash
+run_time=$1
+sleep_time=$2
+
+while [ true ]; do
+    perf stat -ai &
+    pid=$!
+    sleep $run_time
+    kill $!
+    sleep $sleep_time
+done

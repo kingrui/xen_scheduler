@@ -1,0 +1,24 @@
+bench-type: mpi
+class: B
+extra: free
+nprocs: 4
+togdirs:
+  no memory migration:
+    /home/zsy/Project/vnuma/data/189/mpi-dino3-nomig-tog-b-4
+  migrate 8 pages:
+    /home/zsy/Project/vnuma/data/189/mpi-dino3-mig8-tog-b-4
+  migrate 12 pages:
+    /home/zsy/Project/vnuma/data/189/mpi-dino3-mig12-tog-b-4
+  migrate 16 pages:
+    /home/zsy/Project/vnuma/data/189/mpi-dino3-mig16-tog-b-4
+outdir:
+  /home/zsy/Project/vnuma/data/189/mpi-sys-tog-b-4
+benchs:
+  - bt
+  - sp
+  - lu
+  - cg
+  - ft
+  - mg
+  - is
+  - ep

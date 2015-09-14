@@ -1,0 +1,202 @@
+#!/usr/bin/env python
+
+# this script is used to compare two kinds of ums programs with default programs.
+
+# author: YU Xinjie
+# date: 2013.07.16
+# email: yuxinjiect@gmail.com
+
+# how to use this script to test?
+# 1. configure ums program: decide which micros to be commented
+#      $vim /home/user183/scheduler/src/CMakeLists.txt
+#    comment some lines, such as "set (CMAKE_CXX_FLAGS_LIST ${CMAKE_CXX_FLAGS_LIST} -DCYCLE_MISS_RATE)". the last part is just the name of micro.
+# 2. generate ums program.
+#      $cd /home/user183/scheduler/build
+#      $cmake ..
+#      $make
+#    ums program is generated at /home/user183/scheduler/build/bin
+# 3. rename ums into ums1.
+#      $mv ums ums1
+# 4. repeate Step 1-3 again to generate ums2 program.
+# 5. set how much times do you want to run programs.
+#    modify line ? in this script.
+#      times = 20   
+#    it means the benchmark will run 20 times, and calculate average time.
+# 6. get into screen terminal
+#      $screen
+#    after this, you may encouter a description of screen sometimes, and need to type a RETURN key. 
+# 7. run this script.
+#      $./run_2batch
+# 8. get out of screen terminal
+#      Ctrl-A  Ctrl-D
+#    then you can close your terminal, and continue your other work.
+#    the time you need to wait for benchmark's finish is Wait_Time = 650*3*times seconds.
+# 9. After Wait_Time, check the script is finished.
+#      $screen -r
+#    this command will list all the screen terminals with their id.
+#    (if there is only one screen terminal, then this command will get into that screen terminal directly)
+#      $screen -r your_screen_terminal_id
+#    when you get into you screen termianl, you can check whether this script is finished.
+#    if it is finished, then do Step 10, otherwise do Step 8 again to get out of screen terminal and wait more time.
+# 10. save your test result
+#      $cat /home/user183/scripts/run_scripts/perftest/summary.res | tail -n100
+#    save the content from "------batch----------" to the end.
+
+
+
+import sys, os 
+
+#------cofiguration-------
+# benchmark iteration times
+times = 2
+# compared different ums programs number
+ums_num = 1
+# maximum run time of one benchmark
+runtime_threshold = 650
+# the directory where test result is saved
+base_dir = 'perftest'
+# the account name in virtual machines
+vm_user = 'user136'
+
+
+def run_remote(user, ip, pgm, scale):
+    for k in range(0, len(pgm)):
+        output = os.popen("""
+            ssh %s@%s "cd ~/scripts/run_scripts; screen -m -d ./run_npb mpi one '%s' %s 4 ~/NPB3.3-MPI;"
+            """
+            % (user, ip[k], pgm[k], scale[k])
+        )
+        print output.readlines()
+    return
+ 
+def run_all(who, the_round, sleep_time, user, ip, pgm, scale):
+    if who != 'base':
+        output = os.popen("""
+            nohup /home/user189/scheduler/build/bin/%s > ./%s/%s_%s.log 2> ./%s/%s_%s.log &
+            """
+            % (who, base_dir, who, the_round, base_dir, who, the_round)
+        )
+        print output.readlines()
+    run_remote(user, ip, pgm, scale)
+    os.system("sleep %s;" % (sleep_time))
+    if who != 'base':
+        output = os.popen("pkill %s;" % (who))
+        print output.readlines()
+    return
+
+def cal_variance(variance, var_sum, times, time, data, pgm_size):
+    for i in range(0, pgm_size):
+        avg = time[i] = time[i]/float(times)
+        if len(data[i]) != times:
+            sys.exit(0)
+        for d in data[i]:
+            variance[i] += (d - avg)**2
+        variance[i] /= times
+        var_sum[0] += variance[i]
+    return
+
+def output2summ(who, base_dir, times, pgm, time, data, base_time, maxtotaltime, mintotaltime, maxtime, mintime):
+    if who == 'base':
+        os.system("""
+            cd ./%s;
+            echo '------batch----------' >> summary.res;
+            """
+            % (base_dir)
+        )
+    variance = len(pgm)*[0.0]
+    var_sum = [0.0]
+    cal_variance(variance, var_sum, times, time, data, len(pgm))
+    os.system("""
+        cd ./%s;
+        echo '%s times %s tests:' >> summary.res;
+        echo 'max total time:%s min total time:%s total variance:%s' >> summary.res;
+        """
+        % (base_dir, str(times), who, str(maxtotaltime), str(mintotaltime), str(var_sum[0]))
+    )
+    for i in range(0, len(pgm)):
+        if who == 'base':
+            os.system("""
+                cd ./%s;
+                echo '%s: time:%s | max time:%s min time:%s variance:%s' >> summary.res;
+                """
+                % (base_dir, pgm[i], str(time[i]), str(maxtime[i]), str(mintime[i]), str(variance[i]))
+            )
+        else:
+            os.system("""
+                cd ./%s;
+                echo '%s: time:%s improve:%s | max time:%s min time:%s variance:%s' >> summary.res;
+                """
+                % (base_dir, pgm[i], str(time[i]), str((base_time[i]-time[i])/base_time[i]), str(maxtime[i]), str(mintime[i]), str(variance[i]))
+            )
+    return
+
+def get_res(who, pgm_size, time, data, maxtotaltime, mintotaltime, maxtime, mintime):
+    output = os.popen("./get_perf;")
+    j = 0
+    tmp = pgm_size*[0.0]
+    tmptotal = 0.0
+    for atime in output.readlines():
+        tmp[j] = float(atime.strip('\n'))
+        data[j].append(tmp[j])
+        tmptotal += tmp[j]
+        time[j] += tmp[j]
+        print '%s_time[%s]:%s add:%s' % (who, str(j), str(time[j]), tmp[j])
+        j += 1
+    if j != pgm_size:
+        print 'fatal error'
+        sys.exit(0)
+    if tmptotal > maxtotaltime[0]:
+        maxtotaltime[0] = tmptotal
+        for i in range(0, pgm_size):
+            maxtime[i] = tmp[i]
+    if tmptotal < mintotaltime[0]:
+        mintotaltime[0] = tmptotal
+        for i in range(0, pgm_size):
+            mintime[i] = tmp[i]
+    return
+
+def read_config(pgm, ip, scale):
+    f = open('./run.config', 'r')
+    for line in f.readlines():
+        tmp = line.strip('\n').split(' ')
+        pgm.append(tmp[0])
+        scale.append(tmp[1])
+        ip.append(tmp[2])
+    f.close()
+
+if __name__ == "__main__":
+    pgm = [] 
+    ip = [] 
+    scale = []
+    read_config(pgm, ip, scale)
+    base_time = len(pgm)*[0.0]
+    base_data = [[] for col in range(len(pgm))]
+    base_maxtime = len(pgm)*[0.0]
+    base_maxtotaltime = [0.0]
+    base_mintime = len(pgm)*[0.0]
+    base_mintotaltime = [100000.0]
+
+    ums_time = [[0.0 for col in range(len(pgm))] for row in range(ums_num)]
+    ums_data = [[[] for col in range(len(pgm))] for row in range(ums_num)]
+    ums_maxtime = [[0.0 for col in range(len(pgm))] for row in range(ums_num)]
+    ums_maxtotaltime = [[0.0 for col in range(1)] for row in range(ums_num)]
+    ums_mintime = [[0.0 for col in range(len(pgm))] for row in range(ums_num)]
+    ums_mintotaltime = [[100000.0 for col in range(1)] for row in range(ums_num)]
+
+    for i in range(0, times):
+        #base test
+        print 'base test %s' % (str(i))
+        run_all('base', str(i), str(runtime_threshold), vm_user, ip, pgm, scale)
+        get_res('base', len(pgm), base_time, base_data, base_maxtotaltime, base_mintotaltime, base_maxtime, base_mintime)
+
+        #ums test
+        for j in range(0, ums_num):
+            print 'ums%s test %s' % (str(j+1), str(i))
+            run_all('ums%s'%(str(j+1)), str(i), str(runtime_threshold), vm_user, ip, pgm, scale)
+            get_res('ums%s'%(str(j+1)), len(pgm), ums_time[j], ums_data[j], ums_maxtotaltime[j], ums_mintotaltime[j], ums_maxtime[j], ums_mintime[j])
+
+    #output to summary.res
+    print 'output to summary.res'
+    output2summ('base', base_dir, times, pgm, base_time, base_data, -1, base_maxtotaltime[0], base_mintotaltime[0], base_maxtime, base_mintime)
+    for j in range(0, ums_num):
+        output2summ('ums%s'%(str(j+1)), base_dir, times, pgm, ums_time[j], ums_data[j], base_time, ums_maxtotaltime[j][0], ums_mintotaltime[j][0], ums_maxtime[j], ums_mintime[j])

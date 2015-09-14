@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for i in $(seq 0 3); do
+    ssh user184@10.214.0.$((137+i)) 'cd ~/scripts; svn update; cd run_scripts;
+    chmod +x ./*'
+done

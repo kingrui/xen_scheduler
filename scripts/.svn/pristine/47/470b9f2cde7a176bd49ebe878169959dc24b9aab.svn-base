@@ -1,0 +1,21 @@
+#!/bin/bash
+
+source ../common/functions.sh
+
+<% coms.each do |com| %>
+    rm /tmp/run.log
+    echo "<%= com.to_a.join(' ') %> | <%= (benchs.to_set-com).to_a.join(' ') %>" >> /tmp/run.log
+    <% com.each do |ben| %>
+        mpirun -np 1 -bind-to-socket -slot-list 0:0-3 "<%=BEN_DIR%>/bin/<%=ben%>.B.1" > "<%=BEN_DIR%>/output/mpi-<%=ben%>-B-1-bind.txt" &
+    <% end %>
+    <% (benchs.to_set-com).each do |ben| %>
+        mpirun -np 1 -bind-to-socket -slot-list 1:0-3 "<%=BEN_DIR%>/bin/<%=ben%>.B.1" > "<%=BEN_DIR%>/output/mpi-<%=ben%>-B-1-bind.txt" &
+    <% end %>
+	wait
+	res="<%= com.to_a.join(',')%>-<%= (benchs.to_set-com).to_a.join(',')%>.tar.bz2"
+	pushd "<%=BEN_DIR%>/output"
+	tar -cjf "$res" *.txt
+	rm *.txt
+	popd
+	cp "<%=BEN_DIR%>/output/$res" output
+<% end %>

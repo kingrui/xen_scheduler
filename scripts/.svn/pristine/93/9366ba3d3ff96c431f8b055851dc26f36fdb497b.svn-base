@@ -1,0 +1,22 @@
+bench-type: omp
+class: B
+extra: free
+nprocs: 2
+togdirs:
+  dino3:
+    /home/zsy/Project/vnuma/data/183-kvm-4vcpu-4g/omp-dino3-ht-tog-b-2
+  dino3 stay:
+    /home/zsy/Project/vnuma/data/183-kvm-4vcpu-4g/omp-dino3-stay1-ht-tog-b-2
+outdir:
+  /home/zsy/Project/vnuma/data/183-kvm-4vcpu-4g/omp-sys-ht-tog-b-2
+benchs:
+  - bt
+  - sp
+  - lu
+  - is
+  - ep
+  - cg
+  - mg
+  - ft
+
+

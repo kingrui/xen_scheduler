@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+
+require '../common/npb'
+require '../common/matfig'
+
+def main(tgtdir, extra, bentype, cls, nprocs)
+    benchs = NPB.get_benchs bentype
+    names  = NPB.get_names bentype
+    
+    comdirs = {
+      '2-2' => '../../data/183/mpi-perf-2-2-b-4',
+      '2-5' => '../../data/183/mpi-perf-2-5-b-4',
+      'Always' => '../../data/183/mpi-bindperf2-b-4',
+    }
+
+    tgt = NPB.parseList bentype, tgtdir, benchs, cls, nprocs, names, extra
+    coms = Hash.new
+    comdirs.each do |tag, dir|
+      coms[tag] = NPB.parseList bentype, dir, benchs, cls, nprocs,
+        names, extra
+    end
+
+    xtics = benchs
+    
+    names.each do |name|
+        data = Hash.new
+        coms.each do |tag, com|
+          data[tag] = benchs.map do |b|
+            c = com[b][name].to_f
+            t = tgt[b][name].to_f
+            (c - t) / t * 100
+          end
+        end
+        Matfig.bar data, xtics, 'Benchmarks', "Change of #{name} (%)",
+            "com_#{name}", tgtdir
+    end
+end
+
+if __FILE__ == $0
+    main(*ARGV)
+end

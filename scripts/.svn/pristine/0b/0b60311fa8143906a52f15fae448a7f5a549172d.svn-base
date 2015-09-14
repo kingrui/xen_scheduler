@@ -1,0 +1,29 @@
+function <%= mname %>
+    y = [ <% data.first[1].size.times do |index| %>
+            <%= (data.map { |k,v| sprintf '%.2f', data[k][index] }).join ' ' %>
+        <% end %>];
+    bar(y, 0.4);
+    <% if not mse.nil? %>
+         k = [ <% mse.first[1].size.times do |index| %>
+            <%= (mse.map { |k,v| sprintf '%.2f', mse[k][index] }).join ' ' %>
+        <% end %>];
+            hold on;
+            numgroups = size(y, 1);
+            numbars   = size(y, 2);
+            groupwidth = min(0.8, numbars/(numbars+1.5));
+            for i = 1:numbars
+                x = (1:numgroups) - groupwidth/2 + (2*i-1)*groupwidth / (2*numbars);
+                errorbar(x, y(:,i), k(:,i), 'k', 'linestyle', 'none');
+            end
+    <% end %>
+    set(gca, 'FontSize', 12);
+    grid on;
+    ylabel('<%= ylabel %>');
+    set(gca, 'XTickLabel', {<%= (xtics.map { |label| "'#{label}'" })
+        .join ',' %>});
+        <% if data.size>1 %>
+        legend({<%= (data.map { |k,v| "'#{k}'" }).join ',' %>});
+    <% end %>
+    xlabel('<%= xlabel %>');
+    saveas(gcf, '<%= mname %>', 'pdf');
+    quit;

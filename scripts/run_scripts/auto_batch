@@ -1,0 +1,21 @@
+#!/bin/bash
+
+echo "test1" >> /tmp/testnum.log
+./run_2batch.v1 > run.log
+cd perftest
+mkdir test1
+mv ums* test1
+mv ../run.log test1
+cd ..
+
+mv run.config run.config.v1
+mv run.config.v2 run.config
+
+echo "test2" >> /tmp/testnum.log
+./run_2batch.v1 > run.log
+cd perftest
+mkdir test2
+mv ums* test2
+mv ../run.log test2
+
+

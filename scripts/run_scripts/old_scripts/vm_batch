@@ -1,0 +1,184 @@
+#!/usr/bin/env python
+
+import sys, os, subprocess
+import time
+import re
+
+user = "user189"
+vmcfg_path = "/home/" + user + "/vmutils/vmcfg/"
+cfg_filename = [ "suse-", ".cfg" ]
+vm_ip = ["10.214.0.21", "10.214.0.7"]
+vm_name = "suse-"
+vms = [
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11"
+    ]
+log_flag = True;
+
+def get_ip(i):
+    if i < 8:
+        return vm_ip[0] + vms[i]
+    else:
+        return vm_ip[1] + str(i - 8)
+
+def check_exist_vm(c):
+    outstr = os.popen("virsh list").readlines()
+    if len(outstr) > 3:
+        if c == "destroy":
+            del vms[:]
+            for i in range(2, len(outstr) - 1):
+                vms.append((outstr[i].split())[1])
+            return True
+        elif c == "create":
+            print "Fail to create VMs. Please destroy all your VMs first."
+            print "".join(outstr)
+            return False
+    elif len(outstr) < 3:
+        print "Script fatal error."
+        return False
+    else:
+        if c == "destroy":
+            if log_flag:
+                print "No VMs exist."
+            return False
+        else:
+            return True
+
+def exec_cmds(c):
+    cmd = ""
+    if log_flag:
+        print vms
+    for i in range(0, len(vms)):
+        if c == "create":
+            cmd += "virsh " + c + " " + cfg_filename[0] + vms[i] + cfg_filename[1] + "; "
+        elif c == "destroy":
+#            cmd += "virsh " + c + " " + vms[i] + "; "
+            cmd += "virsh shutdown " + vms[i] + "; "
+        else:
+            print "Script fatal error."
+            sys.exit()
+
+    output = os.popen("""
+        cd %s;
+        %s
+        """
+        % (vmcfg_path, cmd)
+    )
+    if log_flag:
+        print "".join(output.readlines())
+    return 
+
+def ssh_check(i):
+    p = subprocess.Popen("ssh root@" + get_ip(i) + """ "ls;" """,
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+        shell = True
+    )
+    str = "".join(p.stdout.readlines()) + "".join(p.stderr.readlines())
+    print str
+    if(len(re.findall("Connection timed out", str)) > 0 or len(re.findall("Connection closed", str)) > 0 or len(re.findall("Connection refused", str)) > 0):
+        return False
+    else:
+        return True
+
+def ping_vm(i):
+    outstr = os.popen("ping -c 1 " + get_ip(i)).readlines()
+    reg = re.compile("time=\d*", re.IGNORECASE | re.MULTILINE)
+    if len(reg.findall("".join(outstr))) > 0:
+        if ssh_check(i):
+            return True
+        else:
+            return False
+    else:
+        return False
+
+def check_all_vm():
+    for i in range(0, len(vms)):
+        if log_flag:
+            print "checking " + get_ip(i) + "..."
+        while not ping_vm(i):
+            if log_flag:
+                print "checking..."
+            time.sleep(1)
+        if log_flag:
+            print "pass check " + get_ip(i)
+
+def check_ip_conflict():
+    if log_flag:
+        print "checking ip conflict..."
+    for i in range(0, len(vms)):
+        if ping_vm(i):
+            print "ip " + get_ip(i) + " causes conflict"
+            return False
+    return True
+
+def create_cmd():
+    if not check_exist_vm("create"):
+        sys.exit()
+    exec_cmds("create")
+    check_all_vm()
+    return
+
+def destroy_cmd():
+    if not check_exist_vm("destroy"):
+        sys.exit()
+    exec_cmds("destroy")
+
+    while len(os.popen("virsh list").readlines()) > 3:
+        if log_flag:
+            print "wait VM to be destroyed."
+        time.sleep(2)
+
+
+
+def print_info():
+    print "vm_batch log cmd [vms]"
+    print "    log: y means open log output;"
+    print "         n means close log output;"
+    print "    cmd: c means create VMs;"
+    print "         d means destroy VMs;"
+    print "         p means check ip confilct."
+    print "    vms: this argument is only used by create cmd."
+    print "         -1 means using default argument, which currently is " + ",".join(vms) + " by default."
+    print "         2,5,6 means using " + cfg_filename[0] + "2" + cfg_filename[1] + "," + cfg_filename[0] + "5" + cfg_filename[1] + "," + cfg_filename[0] + "6" + cfg_filename[1] + " to config files." 
+
+if __name__ == "__main__":
+    arg_num = len(sys.argv)
+    if arg_num < 3 or arg_num > 4:
+        print_info();
+        sys.exit()
+
+    if sys.argv[1] == "y":
+        log_flag = True;
+    elif sys.argv[1] == "n":
+        log_flag = False;
+    else:
+        print_info();
+        sys.exit()
+
+    if (arg_num == 3 and sys.argv[2] != "d" and sys.argv[2] != "cip") or (arg_num == 4 and sys.argv[2] != "c"):
+        print_info();
+        sys.exit()
+
+    if sys.argv[2] == "c":
+        if sys.argv[3] != "-1":
+            vms = sys.argv[3].split(",")
+        create_cmd()
+    elif sys.argv[2] == "d":
+        destroy_cmd()
+    elif sys.argv[2] == "cip":
+        if check_ip_conflict() and log_flag:
+            print "pass checking ip conflict."
+            
+
+
+
+

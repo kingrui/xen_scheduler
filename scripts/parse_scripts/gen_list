@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+require '../common/npb'
+
+def genList(ben_type, dir, benchs, cls, nprocs, names)
+    info = NPB::parseList ben_type, dir, benchs, cls, nprocs, names, 'bind-socket'
+    names.each do |name|
+        puts name
+        benchs.each do |bench|
+            puts "#{bench}: #{info[bench][name]}"
+        end
+    end
+end
+
+if __FILE__ == $0
+    if ARGV.length <= 0
+        printf "Usage:\n#{$0} dir\n"
+        exit
+    end
+    genList 'mpi', ARGV[0], NPB::MPI_BENCHS, 'A', 1, NPB::NORMAL_NAME
+end

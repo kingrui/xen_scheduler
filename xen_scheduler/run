@@ -1,0 +1,6 @@
+#!/bin/bash
+for((j=1;j<=100;j++))
+do
+    ./aa
+done
+exit 0

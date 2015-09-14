@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+if __FILE__ == $0
+  benchs = ARGV[0].split(' ')
+  n_combination = ARGV[1].to_i
+  benchs.combination(n_combination).each do |com|
+    puts com.join(' ')
+    puts (benchs - com).join(' ')
+  end
+end

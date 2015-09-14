@@ -1,0 +1,17 @@
+#!/bin/bash
+for((j=1;j<=3;j++))
+do
+    ./vmbat create -vl all
+    touch ./perftest/summary.res
+    for((i=1;i<=3;i++))
+    do
+        ./run_remote_py run.config$j
+        sleep 3600s
+        ./get_perf run.config$j
+    done
+    mv ./perftest/summary.res ./perftest/summary.res_0123_w_$j
+    touch ./perftest/summary.res
+    ./vmbat shutdown -vl all
+    sleep 200s
+done
+exit 0

@@ -1,0 +1,5 @@
+#!/bin/bash
+for ((j=202;j<=221;j++))
+do
+	ssh root@192.168.1.$j	"cd /root/NPB3.3/NPB3.3-MPI; make $1 NPROCS=$2 CLASS=$3 "
+done

@@ -1,0 +1,545 @@
+#!/usr/bin/env python
+
+#author: YU Xinjie
+#email: yuxinjiect@gmail.com
+
+import sys, os, platform, subprocess
+import time
+import re
+import argparse
+from argparse import RawTextHelpFormatter
+import xml.etree.ElementTree as etree
+from xml.etree.ElementTree import Element
+import operator
+
+# config
+CFG_PATH = "vmbat.config"
+PREDICT_FACTOR = 0.0
+vmcfg_path = ""
+vmcfg_filename = ""
+vm_ip = {}
+vm_name = ""
+vms = []
+
+#
+exist_vms = []
+STDOUT=1
+STDERR=2
+STDDUG=3
+#args = None
+
+def log(stri, level=STDOUT):
+    stri = stri + '\n'
+    if not args.disable_log:
+        if level == STDOUT:
+            sys.stdout.write(stri)
+        elif level == STDERR:
+            sys.stderr.write("ERROR: " + stri)
+        elif level == STDDUG and args.debug:
+            sys.stdout.write(stri)
+    if args.log != None:
+        args.log[0].write(stri)
+
+def get_ip(i):
+    #print i
+    #print vm_ipi
+    if i < 10:
+        return vm_ip['0'+str(i)]
+    else:
+        return vm_ip[str(i)]
+
+def rm_vms(t):
+    global vms
+    global exist_vms
+    if t == "exist":
+        vms = list(set(vms) - set(exist_vms))
+    elif t == "non_exist":
+        vms = list(set(vms) & set(exist_vms))
+    log("to do VMs:" + ",".join(vms), STDDUG)
+    return len(vms) == 0
+
+def check_exist_vm(c):
+    global vms
+    global exist_vms
+    global vm_tech
+    if vm_tech == "KVM":
+        outstr = os.popen("virsh list").readlines()
+    elif vm_tech == "Xen":
+        outstr = os.popen("xl list").readlines()
+
+    if (vm_tech == "KVM" and len(outstr) > 3) or (vm_tech == "Xen" and len(outstr) > 2):
+        if vm_tech == "KVM":
+            lastline = len(outstr) - 1
+            rowidx = 1
+        elif vm_tech == "Xen":
+            lastline = len(outstr)
+            rowidx = 0
+        for i in range(2, lastline):
+            stri = outstr[i].split()[rowidx]
+            vn = vm_name.split("?")
+            idx1 = len(vn[0])
+            if vn[1] == "":
+                exist_vms.append(stri[idx1:])
+            else:
+                idx2 = stri.find(vn[1])
+                exist_vms.append(stri[idx1:idx2])
+        log("exist VMs:" + ",".join(exist_vms), STDDUG)
+        if c == "create" and rm_vms("exist"):
+            log("All the VMs already exist.")
+            return False
+        elif c == "shutdown" and rm_vms("non_exist"):
+            log("No VMs exist.")
+            return False
+        else:
+            return True
+    elif (vm_tech == "KVM" and len(outstr) < 3) or (vm_tech == "Xen" and len(outstr) < 2):
+        log("Script fatal error.", STDERR)
+        return False
+    else:
+        log("No VMs exist.")
+        if c == "shutdown":
+            return False
+        else:
+            return True
+
+def clear_node(root):
+    log("remove numatune")
+    res = root.findall("numatune")
+    if len(res) == 1:
+        root.remove(res[0])
+    elif len(res) > 1:
+        log("fatal error.", STDERR)
+
+def add_node(root, node):
+    res = root.findall("numatune")
+    if len(res) == 1:
+        root.remove(res[0])
+    elif len(res) > 1:
+        log("fatal error.", STDERR)
+
+    subele = Element("memory", {"mode":"interleave", "nodeset":"%d-%d" % (node, node+1)})
+    log("add numatune %d-%d" % (node, node+1))
+    
+    farele = Element("numatune")
+    farele.append(subele)
+    root.append(farele)
+
+def get_assign():
+    assign = {}
+    #get node_num
+    node_num = int(os.popen("ls -l /sys/devices/system/node/ | grep 'node*' | wc -l").readlines()[0].strip())/2
+    print "node???"
+
+    if args.interleave == "init":
+        vms_num = len(vms)
+        avgnum = vms_num / node_num
+        remain = vms_num % node_num
+        node_assign = []
+        for node_idx in range(node_num):
+            if node_idx < remain:
+                node_assign.append(avgnum + 1)
+            else:
+                node_assign.append(avgnum)
+        log("node_assing:" + str(node_assign), STDDUG)
+        na_idx = 0
+        na_tmpsum = node_assign[0]
+        for vm_idx in range(vms_num):
+            if vm_idx >= na_tmpsum:
+                na_idx = na_idx + 1
+                na_tmpsum = na_tmpsum + node_assign[na_idx]
+            assign[vms[vm_idx]] = na_idx*2
+
+    elif args.interleave == "append":
+        #get exist VMs' pid
+        vm_pid = os.popen("pgrep qemu").readlines()
+        log("vm_pid:" + str(vm_pid), STDDUG)
+        if len(vm_pid) == 0:
+            log("No VMs existed. Can not use append MODE", STDERR)
+            sys.exit(1)
+
+        #get exist VMs' node_pair
+        node_pair = {}
+        for i in range(len(vm_pid)):
+            vm_pid[i] = vm_pid[i].strip()
+            stri = os.popen("head -n1 /proc/%s/numa_maps | cut -d' ' -f2" % (vm_pid[i])).readlines()[0].strip()
+            if stri[0] == "i":
+                node_pair[vm_pid[i]] = int(stri[11])/2
+            else:
+                node_pair[vm_pid[i]] = -1
+        log("node_pair:" + str(node_pair), STDDUG)
+
+        #get exist VMs' CPU usage 
+        pid_arg = "-p " + "-p ".join(vm_pid)
+        
+        res = os.popen("top -b -d5 -n2 %s | tail -n%d | awk '{print $1,$9}'" % (pid_arg, len(vm_pid)+1)).readlines()[:-1]
+        cpu_usage = {}
+        for r in res:
+            p = r.strip().split(" ")
+            cpu_usage[p[0]] = int(p[1])
+        log("cpu_usage:" + str(cpu_usage), STDDUG)
+
+        #get node_cpu_usage
+        node_cpu_usage = [0] * node_num
+        for vp in vm_pid:
+            node_id = node_pair[vp]
+            if node_id >= 0:
+                node_cpu_usage[node_id] = node_cpu_usage[node_id] + cpu_usage[vp]
+        log("node_cpu_usage:" + str(node_cpu_usage), STDDUG)
+
+        #get new VMs' CPU num to calculate predicted load
+        predict_load = {}
+        for vm in vms:
+            cpath = vmcfg_path + vmcfg_filename.replace("?", vm)
+            log(cpath)
+            tree = etree.parse(cpath)
+            root = tree.getroot()
+            res = root.findall("vcpu")
+
+            if len(res) == 0:
+                predict_load[vm] = 1 * 100 * PREDICT_FACTOR
+            elif len(res) == 1:
+                predict_load[vm] = int(res[0].text) * 100 * PREDICT_FACTOR
+            elif len(res) > 1:
+                log("fatal error.", STDERR)
+        log("predict_load:" + str(predict_load), STDDUG)
+
+        #generate assign[]
+        sorted_predict_load = sorted(predict_load.iteritems(), key=operator.itemgetter(1))
+        log("sorted_predict_load:" + str(sorted_predict_load), STDDUG)
+        for pl in sorted_predict_load:
+            ncu_idx = node_cpu_usage.index(min(node_cpu_usage))
+            node_cpu_usage[ncu_idx] = node_cpu_usage[ncu_idx] + pl[1]
+            assign[pl[0]] = ncu_idx*2
+
+    log("assign:" + str(assign), STDDUG)
+    return assign
+
+def modify_cfg_file():
+    global args
+    if not args.default and args.interleave == None:
+        return
+    assign = get_assign()
+
+    for vm in vms:
+        cpath = vmcfg_path + vmcfg_filename.replace("?", vm)
+        log(cpath, STDDUG)
+        tree = etree.parse(cpath)
+        root = tree.getroot()
+        if args.default:
+            clear_node(root)
+        else:
+            add_node(root, assign[vm])
+        tree.write(cpath)
+
+def interleave_optimize():
+    modify_cfg_file()
+
+def exec_cmds(c):
+    global vm_tech
+    cmd = ""
+#    log("VMs" + str(vms))
+    if c == "create":
+        if vm_tech == "KVM":
+            interleave_optimize()
+        elif vm_tech == "Xen":
+            log("do not need interleave optimization.")
+        for i in range(0, len(vms)):
+            cfgname = vmcfg_filename.replace("?", vms[i])
+            dirpath = os.path.join(vmcfg_path, os.path.dirname(cfgname))
+            if vm_tech == "KVM":
+                cmd += "cd %s; virsh create %s;" % (dirpath, os.path.basename(cfgname))
+            elif vm_tech == "Xen":
+                cmd += "cd %s; xl create %s;" % (dirpath, os.path.basename(cfgname))
+    elif c == "shutdown":
+        for i in range(0, len(vms)):
+            if vm_tech == "KVM":
+                cmd += "virsh shutdown " + vm_name.replace("?", vms[i]) + "; "
+            elif vm_tech == "Xen":
+                cmd += "xl shutdown " + vm_name.replace("?", vms[i]) + "; "
+    else:
+        log("Script fatal error.", STDERR)
+        sys.exit()
+
+    log(cmd, STDDUG)
+    output = os.popen(cmd)
+    log("".join(output.readlines()))
+    return 
+
+def ssh_check(i):
+    p = subprocess.Popen("ssh root@" + get_ip(int(vms[i])) + """ "ls;" """,
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+        shell = True
+    )
+    striout = "".join(p.stdout.readlines())
+    strierr = "".join(p.stderr.readlines())
+    log(striout, STDDUG)
+    if strierr != "":
+        log(strierr, STDERR)
+    stri = striout + strierr
+    if(len(re.findall("Connection timed out", stri)) > 0 or len(re.findall("Connection closed", stri)) > 0 or len(re.findall("Connection refused", stri)) > 0):
+        return False
+    else:
+        return True
+
+def ping_vm(i, check_ssh):
+    outstr = os.popen("ping -c 1 " + get_ip(int(vms[i]))).readlines()
+    reg = re.compile("time=\d*", re.IGNORECASE | re.MULTILINE)
+    if len(reg.findall("".join(outstr))) > 0:
+        if check_ssh:
+            if ssh_check(i):
+                return True
+            else:
+                return False
+        else:
+            return True
+    else:
+        return False
+
+def check_all_vm():
+    for i in range(0, len(vms)):
+        log("checking " + get_ip(int(vms[i])) + "...")
+        while not ping_vm(i, check_ssh=True):
+            log("checking...")
+            time.sleep(1)
+        log("pass check " + get_ip(int(vms[i])))
+
+def check_ip_conflict():
+    log("checking ip conflict...")
+    for i in range(0, len(vms)):
+        log("checking vm %s..." % vms[i])
+        if ping_vm(i, check_ssh=False):
+            log("ip " + get_ip(int(vms[i])) + " causes conflict", STDERR)
+            return False
+    return True
+
+def create_cmd():
+    if not check_exist_vm("create"):
+        sys.exit(0)
+    exec_cmds("create")
+    check_all_vm()
+    return
+
+def shutdown_cmd():
+    global vm_tech
+    if not check_exist_vm("shutdown"):
+        sys.exit(0)
+    exec_cmds("shutdown")
+
+    while True:
+        if (vm_tech == "KVM" and len(os.popen("virsh list").readlines()) <= 3 + len(exist_vms) - len(vms)) or (vm_tech == "Xen" and len(os.popen("xl list").readlines()) <= 2 + len(exist_vms) - len(vms)):
+            break
+        log("wait VM to be shutdown.")
+        time.sleep(2)
+
+class ListCfgAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        f = open(CFG_PATH, "r")
+        print "".join(f.readlines()).replace("?", "N")
+        sys.exit(0)
+
+def arg_parse():
+    global vms
+    global args
+
+    # global cmd
+    parser = argparse.ArgumentParser(formatter_class=RawTextHelpFormatter, 
+        description="""
+VM management script for qemu/KVM
+""", 
+        epilog="""
+Example:
+  ./vmbat -h
+  ./vmbat -lc
+  ./vmbat create -h
+  ./vmbat create -vl all -i init
+  ./vmbat -d create -vl 3,4,8 -i append
+  ./vmbat -dl shutdown -vl 3,4,8
+  ./vmbat -l /tmp/tmplog check -vl 3,4,8
+""")
+    parser.add_argument('-v', '--version', action='version', version="%(prog)s version 2.0")
+    parser.add_argument('-lc', '--list_config', action=ListCfgAction, nargs=0, 
+        help="""List the current config.
+""")
+    parser.add_argument('-l', '--log', action='store', nargs=1, type=argparse.FileType('w'), metavar='LOG_FILE_PATH', 
+        help="""Output log to file.
+""")
+    parser.add_argument('-dl', '--disable_log', action='store_true', 
+        help="""Disable the log output to sdtin.
+""")
+    parser.add_argument('-d', '--debug', action='store_true', 
+        help="""Output debug log.
+""")
+
+    subparsers = parser.add_subparsers(dest="subcmd", 
+        description="""The actions to manage VMs. Use '%(prog)s subcmd -h' to read the help info.
+""")
+
+    # create subcmd
+    parser_create = subparsers.add_parser('create', formatter_class=RawTextHelpFormatter, help='create VMs')
+    parser_create.add_argument('-vl', '--vm_id_list', action='store', nargs=1, required=True, metavar='VM_ID_LIST', 
+        help="""Id list of the VMs to be created, e.g. "3,5,6". 
+If --vm_id_list is "all", default VMs would be created. 
+Use -lc/--list_config to check the default config.
+""")
+    mempolicy_group = parser_create.add_mutually_exclusive_group()
+    mempolicy_group.add_argument('-d', '--default', action='store_true', 
+        help="""Use DEFAULT memory policy for the VMs to be created. 
+It will modify the VM virsh config files 
+(use -lc/--list_config to check the file path).
+If neither -d(--default) or -i(--interleave) is set, 
+the VMs would be created according to the existed config files. 
+""")
+    mempolicy_group.add_argument('-i', '--interleave', action='store', choices=["init", "append"], metavar='MODE', 
+        help="""Use INTERLEAVE memory policy for the VMs to be created. 
+It will modify the VM virsh config files 
+(use -lc/--list_config to check the file path).
+If MODE 'init' is set, 
+all the VMs to be created would be assigned to Node-Pairs averagely; 
+If MODE 'append' is set, 
+the VMs to be created would be assigned to Node-Pairs according to system load of the existed VMs.
+""")
+
+    # shutdown subcmd
+    parser_shutdown = subparsers.add_parser('shutdown', formatter_class=RawTextHelpFormatter, help='shutdown VMs')
+    parser_shutdown.add_argument('-vl', '--vm_id_list', action='store', nargs=1, required=True, metavar='VM_ID_LIST', help="""id list of the VMs to be shutdown, e.g. "3,5,6". 
+If --vm_id_list is "all", all the existed VMs would be shutdown.
+""")
+
+    # check subcmd
+    parser_check = subparsers.add_parser('check', formatter_class=RawTextHelpFormatter, help='check ip conflict')
+    parser_check.add_argument('-vl', '--vm_id_list', action='store', nargs=1, required=True, metavar='VM_ID_LIST', 
+        help="""Id list of the VMs to be checked, e.g. "3,5,6". 
+If --vm_id_list is "all", default VMs would be created. 
+Use -lc/--list_config to check the default config.
+""")
+
+    # args setting
+    args = parser.parse_args()
+    log("args:" + str(args), STDDUG)
+
+    if args.vm_id_list[0] != "all":
+        vms = args.vm_id_list[0].split(",")
+
+#    log(str(vms))
+
+    return 
+
+def check_file_exist(p):
+    if not os.path.exists(p):
+        log("file do not exist: " + p, STDERR)
+        sys.exit(1)
+
+def read_cfg():
+    global PREDICT_FACTOR
+    global vmcfg_path
+    global vmcfg_filename
+    global vm_name
+    global vm_ip
+    global vms
+    check_file_exist(CFG_PATH)
+    f = open(CFG_PATH, "r")
+    file_content = f.readlines()
+    for line in file_content:
+        line = line.strip()
+        if line == "":
+            continue
+        cfg = line.split("=")
+        if len(cfg) != 2:
+            log("config file %s error: more than one '=': %s" % (CFG_PATH, line), STDERR)
+            sys.exit(1)
+        cfg[0] = cfg[0].strip()
+        cfg[1] = cfg[1].strip()
+        if cfg[0] == "predict_factor":
+            PREDICT_FACTOR = float(cfg[1])
+        elif cfg[0] == "vmcfg_path":
+            vmcfg_path = cfg[1]
+        elif cfg[0] == "vmcfg_filename":
+            if cfg[1].find("?") < 0:
+                log("config file %s error: do not have '?': %s" % (CFG_PATH, cfg[1]), STDERR)
+                sys.exit(1)
+            vmcfg_filename = cfg[1]
+        elif cfg[0] == "vm_name":
+            tmp = cfg[1].split("?")
+            if len(tmp) != 2:
+                log("config file %s error: vm_name can only have one '?': %s" % (CFG_PATH, cfg[1]), STDERR)
+                sys.exit(1)
+            vm_name = cfg[1]
+        elif cfg[0].split(":")[0] == "vm_ip":
+            vm_ip[cfg[0].split(":")[1]] = cfg[1]
+        else:
+            log("config file %s error: unknown config: %s" % (CFG_PATH, line), STDERR)
+            sys.exit(1)
+
+    # check vm id is available
+    avail_vms = vm_ip.keys()
+
+    if args.vm_id_list[0] == "all":
+        vms = avail_vms
+
+    for vm in vms:
+        if not vm in avail_vms:
+            log("input VM ID: '%s' is not available in config file %s." % (vm, CFG_PATH), STDERR)
+            sys.exit(1)
+        check_file_exist(vmcfg_path + vmcfg_filename.replace("?", vm))
+
+    log("predict_factor:" + str(PREDICT_FACTOR), STDDUG)
+    log("vmcfg_path:" + str(vmcfg_path), STDDUG)
+    log("vmcfg_filename:" + vmcfg_filename, STDDUG)
+    log("vm_name:" + vm_name, STDDUG)
+    log("vm_ip:" + str(vm_ip), STDDUG)
+    log("vms:" + str(vms), STDDUG)
+    f.close()
+
+def clean():
+    if args.log != None:
+        args.log[0].close()
+
+def get_platform():
+    if platform.system() != "Linux":
+        log("Only support Linux!", STDERR)
+        sys.exit(1)
+    res = os.popen("cat /etc/*-release").readlines()[0]
+    if len(re.findall("Ubuntu", res)) > 0:
+        log("Your System is Ubuntu.")
+        return "Ubuntu"
+    elif len(re.findall("SUSE Linux Enterprise Server", res)) > 0:
+        log("Your System is SUSE Linux Enterprise Server.")
+        return "SUSE"
+    else:
+        log("Unsupport Linux Distribution!", STDERR)
+        sys.exit(1)
+
+def get_vm_tech(run_env):
+    if run_env == "Ubuntu":
+        dmesg_path = "/var/log/dmesg"
+    elif run_env == "SUSE":
+        dmesg_path = "/var/log/boot.msg"
+    res = "".join(os.popen("grep -i virtual " + dmesg_path).readlines())
+    if len(re.findall("Booting paravirtualized kernel on bare hardware", res)) > 0:
+        log("You are using KVM virtualization tech.")
+        return "KVM"
+    res = "".join(os.popen("grep -i xen " + dmesg_path).readlines())
+    if len(re.findall("Booting paravirtualized kernel on Xen", res)) > 0:
+        log("You are using Xen virtualization tech.")
+        return "Xen"
+
+if __name__ == "__main__":
+    global vm_tech
+
+    arg_parse()
+    read_cfg()
+
+    run_env = get_platform()
+    vm_tech = get_vm_tech(run_env)
+
+    if args.subcmd == "create":
+        create_cmd()
+    elif args.subcmd == "shutdown":
+        shutdown_cmd()
+    elif args.subcmd == "check":
+        if check_ip_conflict():
+            log("pass checking ip conflict.")
+            
+    clean()
+

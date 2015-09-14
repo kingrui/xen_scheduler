@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+require '../common/npb'
+require '../common/matfig'
+
+def genFigure(ben_type, idir, benchs, cls, nprocs, names, odir)
+  info = NPB::parseTable ben_type, idir, benchs, cls, nprocs, names,
+    'bind-socket'
+  benchs.each do |b1|
+    names.each do |name|
+      mname = "#{ben_type}_#{b1}_#{name}"
+      data = Hash.new
+      data[:d] = benchs.map do |b2|
+        info["#{b1}-#{b2}"][name].to_f
+      end
+      Matfig.bar data, benchs, "Benchmark run with #{b1}", "#{name} of #{b1}",
+        mname, odir
+    end
+  end
+end
+
+if __FILE__ == $0
+  if ARGV.size != 3
+    puts "Generate result figure for dual runs."
+    puts "Usage:\n#{File.basename $0} in_dir out_dir ben_type"
+    exit
+  end
+  in_dir = ARGV[0]
+  out_dir = ARGV[1]
+  ben_type = ARGV[2]
+
+  names  = NPB.get_names  ben_type
+  benchs = NPB.get_benchs ben_type
+
+  genFigure ben_type, in_dir, benchs, 'A', 1, names, out_dir
+
+end

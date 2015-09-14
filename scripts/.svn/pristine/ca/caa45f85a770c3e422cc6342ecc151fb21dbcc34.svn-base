@@ -1,0 +1,14 @@
+#!/usr/bin/bash
+
+EXPECTED_ARGS=1
+
+if [ $# -ne $EXPECTED_ARGS ]; then
+    echo "Usage: $(basename $0) new_bench_type" > /dev/stderr
+    exit 1
+fi
+
+new_ben_type=$1
+
+for i in $(ls *.txt); do
+    mv "$i" "${new_ben_type}-${i#*-}"
+done

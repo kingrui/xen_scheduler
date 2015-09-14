@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+require '../common/npb'
+
+if __FILE__ == $0
+    puts NPB::out_name *ARGV
+end

@@ -1,0 +1,6 @@
+#!/bin/bash
+#for ((j=202;j<=221;j++))
+#do
+	echo "$1:  pkill $2.$3.$4"
+	ssh root@192.168.1.$1	"nohup pkill $2.$3.$4 &"
+#done

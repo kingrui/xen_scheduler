@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+
+require '../common/npb'
+require '../common/matfig'
+
+def genFigure(dual_info, single_info, ben_type, benchs, names, out_dir)
+  benchs.each do |b1|
+    names.each do |name|
+      mname = "#{ben_type}_#{b1}_#{name}_com"
+      data = Hash.new
+      data[:d] = benchs.map do |b2|
+        dual = dual_info["#{b1}-#{b2}"][name].to_f
+        single = single_info[b1][name].to_f
+        (dual - single) / single * 100
+      end
+      Matfig.bar data, benchs, "Benchmark run with #{b1}",
+        "#{name} change of #{b1}", mname, out_dir
+    end
+  end
+end
+
+
+if __FILE__ == $0
+  if ARGV.length != 6
+    $stderr.puts 'Generate figure to compare dual run and single run'
+    $stderr.printf "Usage:\n#{File.basename $0} dual_dir single_dir out_dir ben_type class nprocs\n"
+    exit
+  end
+
+  dual_dir   = ARGV[0]
+  single_dir = ARGV[1]
+  out_dir    = ARGV[2]
+  ben_type   = ARGV[3]
+  cls        = ARGV[4]
+  nprocs     = ARGV[5]
+
+  names  = NPB::get_names  ben_type
+  benchs = NPB::get_benchs ben_type
+
+  dual_info   = NPB::parseTable ben_type, dual_dir, benchs, cls, nprocs,
+    names, 'bind-socket'
+  single_info = NPB::parseList ben_type, single_dir, benchs, cls,
+    nprocs, names, 'nobind'
+
+  genFigure dual_info, single_info, ben_type, benchs,
+    names, out_dir
+end

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+bunzip2 -d -k *.bz2
+
+for i in $(ls *.tar); do
+    dir=${i%.*}
+    rm -r "$dir"
+    mkdir "$dir"
+    tar -xvf "$i" -C "$dir"
+    mv ${dir}/output/*.txt "$dir"
+    rm -r "${dir}/output"
+done
+    
+rm ./*.tar

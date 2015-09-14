@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+if __FILE__ == $0
+  runs = { 7 => ['sp', 'B'],
+	   6 => ['lu', 'B'],
+           8 => ['cg', 'B'],
+           #9 => ['ep', 'B'],
+           5 => ['bt', 'B'],
+          #11 => ['ft', 'B'],
+          #12 => ['is', 'B'],
+          #13 => ['mg', 'B']
+  }
+  user = 'user136'
+  runs.each do |ip, bench|
+    cmd = "ssh #{user}@10.214.0.#{ip} \"cd ~/scripts/run_scripts; screen -m -d ./run_npb mpi one '#{bench[0]}' #{bench[1]} 4 ~/NPB3.3-MPI;\""
+    puts cmd
+    system(cmd)
+  end
+end

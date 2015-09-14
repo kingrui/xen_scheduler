@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+require '../common/npb'
+require '../common/matfig'
+
+def genFigure(avg, mse, ben_type, benchs, names, outdir)
+
+  names.each do |name|
+    data = Hash.new
+    data[:k] = benchs.map { |bench| avg[bench][name] }
+    mname = "#{ben_type}_#{name}_tog_avg"
+    Matfig.bar data, benchs, "Benchmarks", "Average #{name}", mname, outdir
+  end
+
+  names.each do |name|
+    data = Hash.new
+    data[:k] = benchs.map { |bench| avg[bench][name] }
+    mname = "#{ben_type}_#{name}_tog_avg"
+    Matfig.bar data, benchs, "Benchmarks", "#{name} MSE", mname, outdir
+  end
+
+end
+
+if __FILE__ == $0
+
+  if ARGV.length != 6
+    $stderr.puts 'Generate figure of benchs run togather'
+    $stderr.printf "Usage:\n#{File.basename $0} in_dir out_dir ben_type class nprocs extra\n"
+    exit
+  end
+
+  indir    = ARGV[0]
+  outdir   = ARGV[1]
+  ben_type = ARGV[2]
+  cls      = ARGV[3]
+  nprocs   = ARGV[4]
+  extra    = ARGV[5]
+
+  names  = NPB::get_names  ben_type
+  benchs = NPB::get_benchs ben_type
+
+  avg, mse = NPB::tog_info ben_type, indir, benchs, cls, nprocs, names,
+    extra
+  genFigure avg, mse, ben_type, benchs, names, outdir
+
+end

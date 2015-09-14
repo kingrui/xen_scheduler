@@ -1,0 +1,39 @@
+bench-type: mpi
+class: B
+extra: free
+nprocs: 4
+togdirs:
+#  ums dino2 sort nomig: 
+#    /home/zsy/Project/vnuma/data/183/mpi-dino2-sort-nomig-ht-sel-b-4
+#  ums dino2 ewma sd100 nomig:
+#    /home/zsy/Project/vnuma/data/183/mpi-dino2-ewmasd100-nomig-ht-sel-b-4
+#  alpha 0.125 nomig:
+#    /home/zsy/Project/vnuma/data/183/mpi-dino2-a0.125-nomig-ht-sel-b-4
+#  balance nomig:
+#    /home/zsy/Project/vnuma/data/183/mpi-dino2-bla-nomig-ht-sel-b-4
+#  balance 80 nomig:
+#    /home/zsy/Project/vnuma/data/183/mpi-dino2-bla80-nomig-ht-sel-b-4
+#  mig remote 4-1024:
+#    /home/zsy/Project/vnuma/data/183/mpi-dino2-llmig8-ht-sel-b-4
+#  mig remote 2-64 s:
+#    /home/zsy/Project/vnuma/data/183/mpi-dino2-llmig10-ht-sel-b-4
+  no memory migrate:
+    /home/zsy/Project/vnuma/data/183/mpi-dino3-nomig-ht-sel-b-4
+  migrate 8 pages:
+    /home/zsy/Project/vnuma/data/183/mpi-dino2-llmig13-ht-sel-b-4
+  migrate 12 pages:
+    /home/zsy/Project/vnuma/data/183/mpi-dino2-llmig20-ht-sel-b-4
+  migrate 16 pages:
+    /home/zsy/Project/vnuma/data/183/mpi-dino2-llmig12-ht-sel-b-4
+#  mig remote dynamic 12 s:
+#    /home/zsy/Project/vnuma/data/183/mpi-dino2-llmig26-ht-sel-b-4
+#  dino3:
+#    /home/zsy/Project/vnuma/data/183/mpi-dino3-mig16-ht-sel-b-4
+#  dino3 2:
+#    /home/zsy/Project/vnuma/data/183/mpi-dino3-mig32-ht-sel-b-4
+outdir:
+  /home/zsy/Project/vnuma/data/183/mpi-sys-ht-sel-b-4
+benchs:
+  - bt
+  - sp
+  - lu

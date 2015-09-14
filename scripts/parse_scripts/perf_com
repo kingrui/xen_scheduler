@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require '../common/perf'
+require '../common/matfig'
+require '../common/npb'
+
+if __FILE__ == $0
+    bentype = ARGV[0]
+    cls     = ARGV[1]
+    nprocs  = ARGV[2]
+    dircom  = ARGV[3]
+    dirtgt  = ARGV[4]
+    outdir  = ARGV[5]
+    
+    benchs = NPB.get_benchs bentype
+    x = Array.new
+    y = Array.new
+    benchs.each do |bench|
+        hashcom = Perf.parse_stat \
+            "#{dircom}/#{bentype}-#{bench}-#{cls}-#{nprocs}-perf.txt"
+        hashtgt = Perf.parse_stat \
+            "#{dirtgt}/#{bentype}-#{bench}-#{cls}-#{nprocs}-perf.txt"
+        numa_penalty = (Perf.cpi hashcom) / (Perf.cpi hashtgt)
+        mpki = Perf.mpki hashtgt
+        puts mpki
+        x << mpki
+        y << numa_penalty
+    end
+    Matfig.plot x, y, '*', benchs, 'MPKI', 'NUMA penalty', 'numaplot', outdir 
+end

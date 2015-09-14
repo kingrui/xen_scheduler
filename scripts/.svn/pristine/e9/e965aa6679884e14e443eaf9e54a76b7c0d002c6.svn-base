@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+
+require 'set'
+
+require '../common/npb'
+require '../common/matfig'
+
+TIME = 'Time in seconds'
+
+def combination_name(com, benchmarks)
+  "#{com.to_a.join(',')}-#{(benchmarks-com).to_a.join(',')}"
+end
+
+def get_sum(beninfo)
+  sum = 0
+  beninfo.each do |k, v|
+    sum += v[TIME].to_f 
+  end
+  sum
+end
+
+if __FILE__ == $0
+  if ARGV.length != 4
+    $stderr.puts "Find opt binding."
+    $stderr.puts "Usage:\n#{File.basename $0} dir bentype benchmarks class"
+    exit(-1)
+  end
+  basedir    = ARGV[0]
+  bentype    = ARGV[1]
+  benchmarks = ARGV[2].split(' ').to_set
+  cls        = ARGV[3]
+
+  coms = NPB.gen_combinations(benchmarks)
+  res = Hash.new
+  coms.each do |com|
+    com_name = combination_name(com, benchmarks)
+    dir = File.join(basedir, com_name)
+    next unless File.exist?(dir)
+    res[com_name] = NPB.parseList(bentype, dir, benchmarks, cls, 1, [TIME], 'bind') 
+  end
+  minsum = 9999
+  mincom = nil
+  sums = Hash.new
+  res.each do |k, v|
+    sum = get_sum(v)
+    sums[k] = sum
+    if sum < minsum
+      mincom = k
+      minsum = sum
+    end
+  end
+  puts "Min:  #{mincom}"
+  puts "Time: #{sums[mincom]}"
+  puts sums
+end

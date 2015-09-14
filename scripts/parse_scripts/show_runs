@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require '../common/npb'
+require '../common/matfig'
+
+if __FILE__ == $0
+  bentype = ARGV[0]
+  cls     = ARGV[1]
+  nprocs  = ARGV[2]
+  extra   = ARGV[3]
+  dir     = ARGV[4]
+
+  names = NPB::get_names bentype
+  benchs = ['bt', 'sp', 'ft']
+  
+  sum_info = NPB::get_summary bentype, dir, benchs, cls, nprocs, names, extra
+  sum_info.each do |bench, lst|
+    names.each do |name|
+      data = Hash.new
+      data[''] = (lst.map { |item| item[name].to_f })
+      Matfig.bar data, (1..data[''].size).to_a, bench, name, "#{bench}_#{name}", dir 
+    end
+  end
+end

@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+require '../common/npb'
+
+if __FILE__ == $0
+    puts (NPB::get_benchs ARGV[0]).to_a.join(' ')
+end

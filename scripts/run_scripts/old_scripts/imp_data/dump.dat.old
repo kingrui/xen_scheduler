@@ -1,0 +1,117 @@
+
+--------------------
+is(host:10.214.0.2): Time in seconds =                     4.06
+lu(host:10.214.0.3): Time in seconds =                   165.59
+ep(host:10.214.0.4): Time in seconds =                    39.30
+cg(host:10.214.0.5): Time in seconds =                   100.95
+mg(host:10.214.0.6): Time in seconds =                    12.19
+bt(host:10.214.0.7): Time in seconds =                   213.85
+ft(host:10.214.0.8): Time in seconds =                    66.11
+sp(host:10.214.0.9): Time in seconds =                   227.59
+--------------------
+is(host:10.214.0.2): Time in seconds =                     4.45
+lu(host:10.214.0.3): Time in seconds =                   163.16
+ep(host:10.214.0.4): Time in seconds =                    41.85
+cg(host:10.214.0.5): Time in seconds =                   100.49
+mg(host:10.214.0.6): Time in seconds =                    12.09
+bt(host:10.214.0.7): Time in seconds =                   218.97
+ft(host:10.214.0.8): Time in seconds =                    69.65
+sp(host:10.214.0.9): Time in seconds =                   235.19
+--------------------
+is(host:10.214.0.2): Time in seconds =                     3.82
+lu(host:10.214.0.3): Time in seconds =                   157.03
+ep(host:10.214.0.4): Time in seconds =                    38.31
+cg(host:10.214.0.5): Time in seconds =                    94.34
+mg(host:10.214.0.6): Time in seconds =                     7.71
+bt(host:10.214.0.7): Time in seconds =                   211.40
+ft(host:10.214.0.8): Time in seconds =                    66.95
+sp(host:10.214.0.9): Time in seconds =                   241.35
+--------------------
+--------------------
+is(host:10.214.0.2): Time in seconds =                     3.59
+lu(host:10.214.0.3): Time in seconds =                   165.77
+ep(host:10.214.0.4): Time in seconds =                    40.11
+cg(host:10.214.0.5): Time in seconds =                    99.73
+mg(host:10.214.0.6): Time in seconds =                    13.18
+bt(host:10.214.0.7): Time in seconds =                   216.36
+ft(host:10.214.0.8): Time in seconds =                    69.43
+sp(host:10.214.0.9): Time in seconds =                   247.20
+
+
+
+Result atfer rebooted,system Normal:
+--------------------
+is(host:10.214.0.2): Time in seconds =                     3.29
+lu(host:10.214.0.3): Time in seconds =                   163.76
+ep(host:10.214.0.4): Time in seconds =                    39.86
+cg(host:10.214.0.5): Time in seconds =                   113.17
+mg(host:10.214.0.6): Time in seconds =                    11.22
+bt(host:10.214.0.7): Time in seconds =                   222.06
+ft(host:10.214.0.8): Time in seconds =                    62.44
+sp(host:10.214.0.9): Time in seconds =                   254.74
+--------------------
+is(host:10.214.0.2): Time in seconds =                     3.48
+lu(host:10.214.0.3): Time in seconds =                   166.44
+ep(host:10.214.0.4): Time in seconds =                    39.95
+cg(host:10.214.0.5): Time in seconds =                   107.11
+mg(host:10.214.0.6): Time in seconds =                    13.32
+bt(host:10.214.0.7): Time in seconds =                   220.14
+ft(host:10.214.0.8): Time in seconds =                    67.89
+sp(host:10.214.0.9): Time in seconds =                   255.16
+--------------------
+is(host:10.214.0.2): Time in seconds =                     3.85
+lu(host:10.214.0.3): Time in seconds =                   162.98
+ep(host:10.214.0.4): Time in seconds =                    39.19
+cg(host:10.214.0.5): Time in seconds =                   110.60
+mg(host:10.214.0.6): Time in seconds =                    12.29
+bt(host:10.214.0.7): Time in seconds =                   218.05
+ft(host:10.214.0.8): Time in seconds =                    65.74
+sp(host:10.214.0.9): Time in seconds =                   257.87
+--------------------
+is(host:10.214.0.2): Time in seconds =                     3.85
+lu(host:10.214.0.3): Time in seconds =                   167.68
+ep(host:10.214.0.4): Time in seconds =                    40.66
+cg(host:10.214.0.5): Time in seconds =                   109.64
+mg(host:10.214.0.6): Time in seconds =                    13.85
+bt(host:10.214.0.7): Time in seconds =                   218.11
+ft(host:10.214.0.8): Time in seconds =                    65.02
+sp(host:10.214.0.9): Time in seconds =                   262.61
+
+
+Using scheduler:
+--------------------
+is(host:10.214.0.2): Time in seconds =                     3.76
+lu(host:10.214.0.3): Time in seconds =                   158.32
+ep(host:10.214.0.4): Time in seconds =                    39.16
+cg(host:10.214.0.5): Time in seconds =                   102.54
+mg(host:10.214.0.6): Time in seconds =                    13.77
+bt(host:10.214.0.7): Time in seconds =                   245.42
+ft(host:10.214.0.8): Time in seconds =                    57.04
+sp(host:10.214.0.9): Time in seconds =                   298.70
+--------------------
+is(host:10.214.0.2): Time in seconds =                     3.67
+lu(host:10.214.0.3): Time in seconds =                   159.42
+ep(host:10.214.0.4): Time in seconds =                    38.30
+cg(host:10.214.0.5): Time in seconds =                   103.12
+mg(host:10.214.0.6): Time in seconds =                    13.09
+bt(host:10.214.0.7): Time in seconds =                   249.43
+ft(host:10.214.0.8): Time in seconds =                    57.07
+sp(host:10.214.0.9): Time in seconds =                   308.51
+--------------------
+is(host:10.214.0.2): Time in seconds =                     3.66
+lu(host:10.214.0.3): Time in seconds =                   159.05
+ep(host:10.214.0.4): Time in seconds =                    38.41
+cg(host:10.214.0.5): Time in seconds =                   101.31
+mg(host:10.214.0.6): Time in seconds =                    14.30
+bt(host:10.214.0.7): Time in seconds =                   247.04
+ft(host:10.214.0.8): Time in seconds =                    61.64
+sp(host:10.214.0.9): Time in seconds =                   302.55
+--------------------
+is(host:10.214.0.2): Time in seconds =                     3.71
+lu(host:10.214.0.3): Time in seconds =                   160.54
+ep(host:10.214.0.4): Time in seconds =                    42.08
+cg(host:10.214.0.5): Time in seconds =                   110.66
+mg(host:10.214.0.6): Time in seconds =                    20.54
+bt(host:10.214.0.7): Time in seconds =                   245.40
+ft(host:10.214.0.8): Time in seconds =                    60.32
+sp(host:10.214.0.9): Time in seconds =                   305.60

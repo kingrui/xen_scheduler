@@ -1,0 +1,304 @@
+#!/usr/bin/env python
+
+# this script is used to compare some ums programs with default programs.
+
+# author: YU Xinjie
+# date: 2013.07.16
+# email: yuxinjiect@gmail.com
+
+import sys, os, subprocess 
+import re
+import xml.etree.ElementTree as etree
+from xml.etree.ElementTree import Element
+
+
+#------cofiguration-------
+# benchmark iteration times
+times = 20
+# compared different ums programs number; include interleave
+ums_num = 2
+#the later interleave_ums_num in ums programs
+interleave_ums_num = 1
+# maximum run time of one benchmark
+runtime_threshold = 850
+# the directory where test result is saved
+base_dir = 'perftest'
+# the account name in virtual machines
+vm_user = 'user136'
+
+host_user = "user189"
+vmcfg_path = "/home/" + host_user + "/vmutils/vmcfg/"
+cfg_filename = [ "suse-", ".cfg" ]
+vms = [
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13"]
+bindvcpu_pgm = [ "base" ]
+#interleave_pgm = [ "interleave" ]
+def run_ssh_npb(user, ip, pgm, scale):
+    p = subprocess.Popen("""
+        ./ssh_npb %s %s %s %s;
+        """
+        % (user, ip, pgm, scale),
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+        shell = True
+    )
+    return p
+
+def run_remote(user, ip, pgm, scale):
+    p = []
+    for k in range(0, len(pgm)):
+        p.append(run_ssh_npb(user, ip[k], pgm[k], scale[k]))
+#    for k in range(0, len(pgm)):
+        outstr = "".join(p[k].stdout.readlines()) + "".join(p[k].stderr.readlines())
+        sys.stdout.write(outstr)
+    return
+
+def clear_node(root):
+    print "remove numatune"
+    res = root.findall("numatune")
+    if len(res) == 1:
+        root.remove(res[0])
+    elif len(res) > 1:
+        print "fatal error."
+
+def add_node(root, cnt):
+    print "add numatune"
+    res = root.findall("numatune")
+    if len(res) == 0:
+        if cnt < (len(vms)/2):
+            subele = Element("memory", {"mode":"interleave", "nodeset":"0-1"})
+        else:
+            subele = Element("memory", {"mode":"interleave", "nodeset":"2-3"})
+        farele = Element("numatune")
+        farele.append(subele)
+        root.append(farele)
+    elif len(res) > 1:
+        print "fatal error."
+
+def bind_vcpu(root, cnt):
+    print "bind vcpu"
+    e = root.find("vcpu")
+    if cnt < (len(vms)/2):
+        e.set("cpuset", "0,1,4,5,8,9,12,13,16,17,20,21,24,25,28,29")
+    else:
+        e.set("cpuset", "2,3,6,7,10,11,14,15,18,19,22,23,26,27,30,31")
+    e.set("placement", "static")
+
+def rmbind_vcpu(root, cnt):
+    print "remove bind vcpu"
+    e = root.find("vcpu")
+    e.clear()
+    e.text = "4"
+
+def modify_cfg_file(who):
+    cnt = 0
+    for vm in vms:
+        cpath = vmcfg_path + cfg_filename[0] + vm + cfg_filename[1]
+        print cpath
+        tree = etree.parse(cpath)
+        root = tree.getroot()
+        add_node(root, cnt)
+        if who in bindvcpu_pgm:
+            bind_vcpu(root, cnt)
+        else:
+            rmbind_vcpu(root, cnt)
+#        if who in interleave_pgm:
+#            add_node(root, cnt)
+#        else:
+#            clear_node(root)
+        tree.write(cpath)
+        cnt = cnt + 1
+
+def start_vm(who):
+    modify_cfg_file(who)
+    print "modified config file"
+    output = os.popen("./vm_batch y d;./vm_batch y c -1; sleep 10;")
+    sys.stdout.write("".join(output.readlines()))
+#    if len(output.readlines()) > 0:
+#        sys.stdout.write("".join(output.readlines()))
+#        sys.exit(0);
+ 
+def run_all(who, the_round, sleep_time, user, ip, pgm, scale):
+    if who != 'base':
+        output = os.popen("""
+            nohup /home/%s/scheduler/build/bin/%s > ./%s/%s_%s.log 2> ./%s/%s_%s.log &
+            """
+            % (host_user, who, base_dir, who, the_round, base_dir, who, the_round)
+        )
+        sys.stdout.write("".join(output.readlines()))
+        print "start ums"
+    run_remote(user, ip, pgm, scale)
+    os.system("sleep %s;" % (sleep_time))
+    if who != 'base':
+        output = os.popen("pkill %s;" % (who))
+        sys.stdout.write("".join(output.readlines()))
+    return
+
+def cal_variance(variance, var_sum, times, time, data, pgm_size):
+    for i in range(0, pgm_size):
+        avg = time[i] = time[i]/float(times)
+        if len(data[i]) != times:
+            sys.exit(0)
+        for d in data[i]:
+            variance[i] += (d - avg)**2
+        variance[i] /= times
+        var_sum[0] += variance[i]
+    return
+
+def output2summ(who, base_dir, times, ip, pgm, time, data, base_time, maxtotaltime, mintotaltime, maxtime, mintime, base_all, ums_all, base_maxtotaltime, base_maxtime):
+    if who == 'base':
+        os.system("""
+            cd ./%s;
+            echo '------batch----------' >> summary.res;
+            """
+            % (base_dir)
+        )
+    variance = len(pgm)*[0.0]
+    var_sum = [0.0]
+    cal_variance(variance, var_sum, times, time, data, len(pgm))
+    os.system("""
+        cd ./%s;
+        echo '%s times %s tests:' >> summary.res;
+        echo 'max total time:%s min total time:%s total variance:%s' >> summary.res;
+        """
+        % (base_dir, str(times), who, str(maxtotaltime), str(mintotaltime), str(var_sum[0]))
+    )
+    if who == 'base':
+        os.system("""
+            cd ./%s;
+            echo 'all the total time:%s' >> summary.res;
+            """
+            % (base_dir, str(base_all))
+        )
+    else:
+        os.system("""
+            cd ./%s;
+            echo 'all the total time:%s improve:%s worst_improve:%s' >> summary.res;
+            """
+            % (base_dir, str(ums_all), str((base_all - ums_all)/base_all), str((base_maxtotaltime - maxtotaltime)/base_maxtotaltime))
+        )
+    for i in range(0, len(pgm)):
+        if who == 'base':
+            os.system("""
+                cd ./%s;
+                echo '%s/%s: time:%s | max time:%s min time:%s variance:%s' >> summary.res;
+                """
+                % (base_dir, ip[i], pgm[i], str(time[i]), str(maxtime[i]), str(mintime[i]), str(variance[i]))
+            )
+        else:
+            os.system("""
+                cd ./%s;
+                echo '%s/%s: time:%s improve:%s worst_improve:%s| max time:%s min time:%s variance:%s' >> summary.res;
+                """
+                % (base_dir, ip[i], pgm[i], str(time[i]), str((base_time[i]-time[i])/base_time[i]), str((base_maxtime[i]-maxtime[i])/base_maxtime[i]), str(maxtime[i]), str(mintime[i]), str(variance[i]))
+            )
+    return
+
+def get_res(who, pgm_size, time, data, maxtotaltime, mintotaltime, maxtime, mintime, all_time):
+    output = os.popen("./get_perf;")
+    j = 0
+    tmp = pgm_size*[0.0]
+    tmptotal = 0.0
+    for atime in output.readlines():
+        tmp[j] = float(atime.strip('\n'))
+        data[j].append(tmp[j])
+        tmptotal += tmp[j]
+        time[j] += tmp[j]
+        all_time[0] += tmp[j]
+        print '%s_time[%s]:%s add:%s' % (who, str(j), str(time[j]), tmp[j])
+        j += 1
+    if j != pgm_size:
+        print 'fatal error'
+        sys.exit(0)
+    if tmptotal > maxtotaltime[0]:
+        maxtotaltime[0] = tmptotal
+        for i in range(0, pgm_size):
+            maxtime[i] = tmp[i]
+    if tmptotal < mintotaltime[0]:
+        mintotaltime[0] = tmptotal
+        for i in range(0, pgm_size):
+            mintime[i] = tmp[i]
+    os.system("echo %s %s >> /tmp/testnum.log" % (who, str(all_time[0])))
+    return
+
+def read_config(pgm, ip, scale):
+    f = open('./run.config', 'r')
+    for line in f.readlines():
+        tmp = line.strip('\n').split(' ')
+        pgm.append(tmp[0])
+        scale.append(tmp[1])
+        ip.append(tmp[2])
+    f.close()
+
+if __name__ == "__main__":
+
+#    modify_cfg_file("ee")
+#    sys.exit(0)
+    
+    pgm = [] 
+    ip = [] 
+    scale = []
+    read_config(pgm, ip, scale)
+    base_time = len(pgm)*[0.0]
+    base_data = [[] for col in range(len(pgm))]
+    base_maxtime = len(pgm)*[0.0]
+    base_maxtotaltime = [0.0]
+    base_mintime = len(pgm)*[0.0]
+    base_mintotaltime = [100000.0]
+    base_all = [0.0]
+
+    ums_time = [[0.0 for col in range(len(pgm))] for row in range(ums_num)]
+    ums_data = [[[] for col in range(len(pgm))] for row in range(ums_num)]
+    ums_maxtime = [[0.0 for col in range(len(pgm))] for row in range(ums_num)]
+    ums_maxtotaltime = [[0.0 for col in range(1)] for row in range(ums_num)]
+    ums_mintime = [[0.0 for col in range(len(pgm))] for row in range(ums_num)]
+    ums_mintotaltime = [[100000.0 for col in range(1)] for row in range(ums_num)]
+    ums_all = [[0.0 for col in range(1)] for row in range(ums_num)]
+
+    start_vm('base')
+    #for remove the first result
+    run_all('base', '0', str(runtime_threshold), vm_user, ip, pgm, scale)
+    for i in range(0, times/2):
+        os.system("echo %s >> /tmp/testnum.log" % (str(i)))
+        #base test
+        print 'base test %s' % (str(i))
+        run_all('base', str(i), str(runtime_threshold), vm_user, ip, pgm, scale)
+        get_res('base', len(pgm), base_time, base_data, base_maxtotaltime, base_mintotaltime, base_maxtime, base_mintime, base_all)
+
+    start_vm('interleave')
+    #for remove the first result
+    run_all('base', '0', str(runtime_threshold), vm_user, ip, pgm, scale)
+    for i in range(0, times):
+        os.system("echo %s >> /tmp/testnum.log" % (str(i)))
+        #interleave ums test
+        for j in range(ums_num - interleave_ums_num, ums_num):
+            print 'ums%s test %s' % (str(j+1), str(i))
+            run_all('ums%s'%(str(j+1)), str(i), str(runtime_threshold), vm_user, ip, pgm, scale)
+            get_res('ums%s'%(str(j+1)), len(pgm), ums_time[j], ums_data[j], ums_maxtotaltime[j], ums_mintotaltime[j], ums_maxtime[j], ums_mintime[j], ums_all[j])
+
+    start_vm('base')
+    #for remove the first result
+    run_all('base', '0', str(runtime_threshold), vm_user, ip, pgm, scale)
+    for i in range(times/2, times):
+        os.system("echo %s >> /tmp/testnum.log" % (str(i)))
+        #base test
+        print 'base test %s' % (str(i))
+        run_all('base', str(i), str(runtime_threshold), vm_user, ip, pgm, scale)
+        get_res('base', len(pgm), base_time, base_data, base_maxtotaltime, base_mintotaltime, base_maxtime, base_mintime, base_all)
+
+    #output to summary.res
+    print 'output to summary.res'
+    output2summ('base', base_dir, times, ip, pgm, base_time, base_data, -1, base_maxtotaltime[0], base_mintotaltime[0], base_maxtime, base_mintime, base_all[0], -1, -1, -1)
+    for j in range(0, ums_num):
+        output2summ('ums%s'%(str(j+1)), base_dir, times, ip, pgm, ums_time[j], ums_data[j], base_time, ums_maxtotaltime[j][0], ums_mintotaltime[j][0], ums_maxtime[j], ums_mintime[j],base_all[0], ums_all[j][0], base_maxtotaltime[0], base_maxtime)

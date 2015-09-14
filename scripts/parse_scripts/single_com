@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require '../common/npb'
+require '../common/matfig'
+
+if __FILE__ == $0
+  comdir  = ARGV[0]
+  tgtdir  = ARGV[1]
+  extrac  = ARGV[2]
+  extrat  = ARGV[3]
+  bentype = ARGV[4]
+  cls     = ARGV[5]
+  nprocs  = ARGV[6]
+
+  benchs = NPB::get_benchs bentype
+  names  = NPB::get_names bentype
+
+  com = NPB::parseList bentype, comdir, benchs, cls, nprocs, names, extrac
+  tgt = NPB::parseList bentype, tgtdir, benchs, cls, nprocs, names, extrat
+
+  xtics = com.collect { |k, | k }
+  names.each do |name|
+    chg = Hash.new
+    chg[:d] = com.collect { |k, v| (v[name].to_f - tgt[k][name].to_f)/tgt[k][name].to_f*100 }
+    Matfig::bar chg, xtics, 'Benchmarks',
+      "Change of #{name} (%)",
+      "com_#{name}", tgtdir
+  end
+end

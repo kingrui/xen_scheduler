@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+require '../common/npb'
+require '../common/matfig'
+
+def genFigure(tog, single, ben_type, benchs, names, outdir)
+  names.each do |name|
+    mname = "#{ben_type}_#{name}_compare_with_single"
+    data = Hash.new
+    data[:d] = benchs.map do |b|
+      avg = tog[b][name].to_f
+      sig = single[b][name].to_f
+      (avg - sig) / sig * 100
+    end
+    Matfig.bar data, benchs, "Benchmarks", "#{name} change (%)", mname, outdir
+  end
+end
+ 
+if __FILE__ == $0
+
+  if ARGV.length != 7
+    $stderr.puts 'Generate figure to compare average tog run and single run'
+    $stderr.printf "Usage:\n#{File.basename $0} tog_dir single_dir out_dir ben_type class nprocs extra\n"
+    exit
+  end
+
+  tog_dir    = ARGV[0]
+  single_dir = ARGV[1]
+  outdir     = ARGV[2]
+  ben_type   = ARGV[3]
+  cls        = ARGV[4]
+  nprocs     = ARGV[5]
+  extra      = ARGV[6]
+
+  names  = NPB::get_names  ben_type
+  benchs = NPB::get_benchs ben_type
+
+  avg, mse = NPB::tog_info ben_type, tog_dir, benchs, cls, nprocs, names,
+    extra
+  single   = NPB::parseList ben_type, single_dir, benchs, cls, nprocs,
+    names, 'nobind'
+
+  genFigure avg, single, ben_type, benchs, names, outdir
+
+end
+

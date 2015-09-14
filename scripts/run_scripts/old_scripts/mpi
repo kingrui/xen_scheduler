@@ -1,0 +1,26 @@
+#!/bin/bash
+source ../common/functions.sh
+source ../common/mpiruns.sh
+source ../common/runs.sh
+
+benchmark=run_single
+bentype=mpi
+benchs="$(../common/get_benchs $bentype)"
+class="B"
+nprocs=4
+bendir="/home/user183/NPB3.3/NPB3.3-MPI"
+runlog="/tmp/runlog.txt"
+rep=1
+extra=$(hostname)
+email="3090104738@zju.edu.cn"
+
+for i in $(seq 1 $rep); do
+    $benchmark "$benchs" $class $nprocs "$bendir" $bentype "10 0 -10"
+    show_run_info "$benchs" $class $nprocs $benchmark >> "$runlog"
+    after_run $bentype "$bendir" $extra "$runlog" $benchmark $email
+done
+Configure
+benchs = ep sp bt mg is lu ft cg
+classes = B
+nprocs = 4
+running cmd = run_single

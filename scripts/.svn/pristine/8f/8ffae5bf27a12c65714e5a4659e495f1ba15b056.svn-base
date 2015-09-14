@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+if __FILE__ == $0
+  ips = ['10.214.0.136', '10.214.0.137']
+  ips.each do |ip|   
+    cmd = "ssh user136@#{ip} \"cd ~/scripts/run_scripts; screen -d -m \\'for i in $(seq 1 10); do ./run_npb mpi run_togather \"bt lu sp ep\" B 1 ~/NPB3.3-MPI ; done;\\'\""
+    puts cmd
+    system cmd
+  end
+end

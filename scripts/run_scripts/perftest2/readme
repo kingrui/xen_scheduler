@@ -1,0 +1,7 @@
+summary.res_1016	10.16 with patch and scheduler *4
+summary.res_1017	10.17 with patch and scheduler *6
+summary.res_1018	10.18 no patch and no scheduler *6
+summary.res_1029	10.29 no patch and no scheduler *4
+summary.res_1029_2	10.29 no patch and no scheduler *4
+summary.res_1029_3	10.29 with patch  no scheduler *4
+

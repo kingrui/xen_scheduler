@@ -1,0 +1,14 @@
+function <%= mname %>
+    x = [<%= (x.map { |v| sprintf '%.2f', v }).join ' ' %>];
+    y = [<%= (y.map { |v| sprintf '%.2f', v }).join ' ' %>];
+    plot(x, y, '<%= pstyle %>');
+    text(x, y, {<%= (plabel.map { |x| sprintf "'#{x}'" }).join ',' %>}, 'VerticalAlignment','bottom', 'HorizontalAlignment','right');
+    xlabel('<%= xlabel %>');
+    ylabel('<%= ylabel %>');
+    hold on;
+    A = polyfit(x, y, 1);
+    xi = 0:0.01:max(x);
+    yi = polyval(A, xi);
+    plot(xi, yi, 'r', 'linewidth', 1);
+    saveas(gcf, '<%= mname %>', 'pdf');
+    quit;

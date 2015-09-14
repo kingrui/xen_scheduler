@@ -1,0 +1,93 @@
+#!/usr/bin/env ruby
+
+require '../common/npb'
+require '../common/matfig'
+
+def cal(std, to_com, benchs, names)
+  ret = Hash.new nil
+  benchs.each do |obench| 
+    ret[obench] = Hash.new if ret[obench].nil?
+    benchs.each do |ibench|
+      ret[obench][ibench] = Hash.new if ret[obench][ibench].nil?
+      names.each do |name|
+        ret[obench][ibench][name] = Array.new if ret[obench][ibench][name].nil?
+        to_com[obench][ibench].each_with_index do |comv, index|
+          stdv = std[obench][ibench][name].to_f
+          comv = comv[name].to_f
+          value = (comv-stdv) / stdv * 100
+          ret[obench][ibench][name] << value
+        end
+      end
+    end
+  end
+  return ret
+end
+
+def genFigure(info, benchs, names, outdir)
+  names.each do |name|
+    benchs.each do |ob|
+      mname = "cross_com_#{ob}_#{name}-1-3"
+      data = Hash.new
+      (0..2).each { |i| data[i] = benchs.map { |ib| info[ob][ib][name][i] } }
+      Matfig.bar mname, benchs, "Benchmark run with #{ob}",
+        "#{name} of #{ob} change compare with default (%)", mname, outdir
+
+      mname = "cross_com_#{ob}_#{name}-4-7"
+      data = Hash.new
+      (3..6).each { |i| data[i] = benchs.map { |ib| info[ob][ib][name][i] } }
+      Matfig.bar mname, benchs, "Benchmark run with #{ob} (%)",
+        "#{name} of #{ob} change compare with default (%)", mname, outdir
+    end
+  end
+end
+
+if __FILE__ == $0
+  if ARGV.length != 5
+    $stderr.puts "Compare cross"
+    $stderr.print "Usage:\n#{File.basename $0} indir outdir ben_type class nprocs\n"
+    exit
+  end
+
+  indir   = ARGV[0]
+  outdir  = ARGV[1]
+  bentype = ARGV[2]
+  cls     = ARGV[3]
+  nprocs  = ARGV[4]
+  #extra   = ARGV[5]
+
+  schs = [
+    [0, 0, 0, 1],
+    [1, 0, 0, 1],
+    [1, 1, 0, 1],
+    [0, 1, 0, 0],
+    [1, 0, 0, 0],
+    [0, 0, 0, 0],
+    [1, 1, 0, 0]]
+
+  names  = NPB::get_names bentype
+  #benchs = NPB::get_benchs bentype
+  benchs = ['lu', 'bt']
+
+  data = Hash.new
+  std  = Hash.new 
+  benchs.each do |obench|
+    data[obench] = Hash.new if data[obench].nil?
+    std[obench] = Hash.new if std[obench].nil?
+    benchs.each do |ibench|
+      data[obench][ibench] = Array.new if data[obench][ibench].nil?
+      std[obench][ibench] = NPB::cross_info bentype, indir, obench,
+        ibench, 0, 1, 0, 1, cls, nprocs, names, ''
+      schs.each do |sch|
+        data[obench][ibench] << (NPB::cross_info bentype, indir,
+                                 obench, ibench, sch[0], sch[1], sch[2], sch[3], cls,
+                                 nprocs, names, '')
+      end
+    end
+  end
+
+  #puts data
+  rdata = cal std, data, benchs, names
+  puts rdata
+
+  genFigure rdata, benchs, names, outdir
+end

@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+
+import sys, os
+
+def read_config(pgm, ip, scale, ttype):
+#    f = open('./run.config', 'r')
+    f = open(sys.argv[1],'r')
+    init = True
+    for line in f.readlines():
+        tmp = line.strip('\n').split(' ')
+        if init:
+            ttype.append(tmp[0])
+            init = False
+        else:
+            pgm.append(tmp[0])
+            scale.append(tmp[1])
+            ip.append(tmp[2])
+    f.close()
+
+
+if __name__ == "__main__":
+    ip = []
+    pgm = []
+    scale = []
+    ttype = []
+    read_config(pgm, ip, scale, ttype)
+
+    for i in range(0, len(pgm)):
+	res_file = "/root/NPB3.3/NPB3.3-%s/output/%s-%s-%s-%s-free.txt" % (ttype[0].upper(), ttype[0], pgm[i], scale[i], "4")
+        cmd = """ssh root@%s "mkdir /root/NPB3.3/NPB3.3-%s/output 2> /dev/null; rm -f %s; nohup mpirun -np %s /root/NPB3.3/NPB3.3-%s/bin/%s.%s.%s &> %s &" """ % (ip[i], ttype[0].upper(), res_file, "4", ttype[0].upper(), pgm[i], scale[i], "4", res_file)
+#        cmd = """ssh root@%s mpirun -np 4 "/home/user136/NPB3.3-MPI/bin/lu.B.4" &> "/home/user136/NPB3.3-MPI/output/mpi-lu-B-4-free.txt"
+#ssh root@%s "nohup ./run_npb %s one '%s' %s 4 ~/NPB3.3/NPB3.3-%s &> /tmp/npb-mpi.log;" """ % (ip[i], ttype[0], pgm[i], scale[i], ttype[0].upper())
+        print cmd
+        output = os.popen(cmd)
+        print "".join(output.readlines())
+
+
+
+
+

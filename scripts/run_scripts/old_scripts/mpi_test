@@ -1,0 +1,302 @@
+#!/bin/bash
+
+benchs='cg bt ep ft is lu mg sp'
+#benchs='cg bt'
+classes='B'
+nps='1'
+runlog='run.log'
+ben_type=mpi
+
+out_name()
+{
+    bench=$1
+    class=$2
+    nprocs=$3
+    other=$4
+
+    echo "$ben_type-$bench-$class-$nprocs-$other.txt"
+}
+
+get_pname()
+{
+    bench=$1
+    class=$2
+    nprocs=$3
+
+    echo "$bench.$class.$nprocs"
+}
+
+mkbench()
+{
+    bench=$1
+    class=$2
+    nprocs=$3
+
+    make clean &> /dev/null
+    make $bench NPROCS=$nprocs CLASS=$class 2>> $runlog 1> /dev/null
+}
+
+do_run_no_bind()
+{
+    bench=$1
+    class=$2
+    nprocs=$3 
+    pname=$(get_pname $bench $class $nprocs)
+    out_file=$(out_name $bench $class $nprocs "nobind")
+
+    mpirun -np $nprocs bin/$pname &> output/$out_file
+}
+
+do_run_bind()
+{
+    bench=$1
+    class=$2
+    nprocs=$3
+    pname=$(get_pname $bench $class $nprocs)
+    out_file=$(out_name $bench $class $nprocs "bind-socket")
+
+    mpirun -np $nprocs -bind-to-socket -report-bindings \
+        bin/$pname &> output/$out_file
+}
+
+run_single()
+{
+    for bench in $benchs; do
+        for class in $classes; do
+            for np in $nps; do
+                #mkbench $bench $class $np
+                echo "running bench=$bench class=$class nprocs=$np" > /dev/stderr
+                if [ $np -gt 8 ]; then
+                    do_run_no_bind $bench $class $np
+                else
+                    do_run_bind $bench $class $np
+                fi
+            done
+        done
+    done
+}
+
+count_running()
+{
+    pname=$1
+    pgrep -c $pname
+}
+
+at_least_one_running()
+{
+    bench1=$1
+    bench2=$2
+    
+    if [ $(count_runnig $bench1) -gt '0' ] || [ $(count_runnig $bench2) -gt '0' ]; then
+        return 0
+    fi
+    return 1
+}
+
+# is bench1 need restart
+need_restart()
+{
+    bench1=$1
+    bench2=$2
+
+    #echo "$bench1 $(count_running $bench1)" > /dev/stderr
+    #echo "$bench2 $(count_running $bench2)" > /dev/stderr
+    if [ $bench1 != $bench2 ] && [ $(count_running $bench2) -eq 1 ] && [ $(count_running $bench1) -lt 1 ]; then
+        #echo "Need" > /dev/stderr
+        return 0
+    fi
+    #echo "No need" > /dev/stderr
+    return 1
+}
+
+do_run_dual()
+{
+    obench=$1
+    ibench=$2
+    class=$3
+    nprocs=$4
+    ob_pname=$(get_pname $obench $class ${nprocs})
+    ib_pname=$(get_pname $ibench $class ${nprocs})
+    ob_out=$(out_name "$obench-$ibench" $class $nprocs "bind-socket")
+    ib_out=$(out_name "$ibench-$obench" $class $nprocs "bind-socket")
+    counter=0
+    
+    mpirun -np $nprocs -bind-to-socket -report-bindings -slot-list 1:0-3 \
+        bin/$ib_pname &>output/$(out_name "$ibench-$obench" $class $nprocs \
+        "bind-socket-$counter") & 
+    mpirun -np $nprocs -bind-to-socket -report-bindings -slot-list 1:0-3 \
+        bin/$ob_pname &>output/$ob_out & 
+    ID=$!
+    sleep 1
+    while [ $(count_running $ob_pname) -ge 1 ]; do
+        if need_restart $ib_pname $ob_pname; then
+            counter=$((counter + 1))
+            echo "Restarting $ib_pname" > /dev/stderr
+            mpirun -np $nprocs -bind-to-socket -report-bindings -slot-list 1:0-3 \
+            bin/$ib_pname &>output/$(out_name "$ibench-$obench" $class \
+                $nprocs "bind-socket-$counter") &
+        fi
+        sleep 1
+    done
+    echo "loop ends" > /dev/stderr
+    # wait benchmark
+    echo "waiting" > /dev/stderr
+    wait
+}
+
+do_run_cross()
+{
+    obench=$1
+    ibench=$2
+    class=$3
+    nprocs=$4
+    ocpu=$5
+    icpu=$6
+    omem=$7
+    imem=$8
+    ob_pname=$(get_pname $obench $class ${nprocs})
+    ib_pname=$(get_pname $ibench $class ${nprocs})
+    # mem-this-that cpu-this-that
+    ob_out=$(out_name "$obench-$ibench" $class $nprocs "mem$omem-$imem-cpu$ocpu-$icpu")
+    ib_out=$(out_name "$ibench-$obench" $class $nprocs "mem$imem-$omem-cpu$icpu-$ocpu")
+    counter=0
+    
+    mpirun -np $nprocs numactl --membind=$imem --cpunodebind=$icpu \
+        bin/$ib_pname &>output/$(out_name "$ibench-$obench" $class $nprocs \
+        "mem$imem-$omem-cpu$icpu-$ocpu-$counter") & 
+    mpirun -np $nprocs numactl --membind=$omem --cpunodebind=$ocpu \
+        bin/$ob_pname &>output/$ob_out & 
+    ID=$!
+    sleep 1
+    while [ $(count_running $ob_pname) -ge 1 ]; do
+        if need_restart $ib_pname $ob_pname; then
+            counter=$((counter + 1))
+            echo "Restarting $ib_pname" > /dev/stderr
+            mpirun -np $nprocs numactl --membind=$imem --cpunodebind=$icpu \
+            bin/$ib_pname &>output/$(out_name "$ibench-$obench" $class \
+                $nprocs "mem$imem-$omem-cpu$icpu-$ocpu-$counter") &
+        fi
+        sleep 1
+    done
+    #echo "loop ends" > /dev/stderr
+    # wait benchmark
+    echo "waiting" > /dev/stderr
+    wait
+}
+
+run_dual()
+{
+    for class in $classes; do
+        for np in $nps; do
+            for obench in $benchs; do
+                for ibench in $benchs; do
+                    #mkbench $obench $class $np
+                    #mkbench $ibench $class $np
+                    echo "running obench = $obench, ibench = $ibench" > /dev/stderr
+                    do_run_dual $obench $ibench $class $np
+                done
+            done
+        done
+    done
+}
+
+make_all()
+{
+    class=$1
+    nprocs=$2
+    for bench in $benchs; do
+        mkbench $bench $class $nprocs
+    done
+}
+
+gen_runfile()
+{
+    run_seq=$1
+    echo ""
+}
+
+run_togather()
+{
+    class=$1
+    nprocs=$2
+
+    make_all $class $nprocs
+    run_seq=$(../rand_perm $benchs)
+    echo "Run seq: $run_seq" >> $runlog
+    for bench in $run_seq; do
+        do_run_no_bind $bench $class $nprocs &
+    done
+    wait
+}
+
+
+do_bind_core()
+{
+    bench=$1
+    class=$2
+    nprocs=$3
+    slots=$4
+    pname=$(get_pname $bench $class $nprocs)
+    out_file=$(out_name $bench $class $nprocs $slots)
+
+    mpirun --bind-to-core --report-bindings -np $nprocs --slot-list $slots \
+        bin/$pname &> output/$out_file 
+}
+
+run_split_bind()
+{
+    class=$1
+    nprocs=$2
+    slots=$3
+    
+    for bench in $benchs; do
+        do_bind_core $bench $class $nprocs $slots
+    done
+}
+
+run_cross()
+{
+    class=$1
+    nprocs=$2
+    mem_aff="0 1"
+    cpu_aff="0 1"
+    # Obench is always on cpu node 0
+    ocpu=0
+    for obench in $benchs; do
+        for ibench in $benchs; do
+            for omem in $mem_aff; do
+                for imem in $mem_aff; do
+                    for icpu in $cpu_aff; do
+                        do_run_cross $obench $ibench $class $nprocs $ocpu $icpu $omem $imem
+                    done
+                done
+            done
+        done
+    done
+}
+
+show_run_info()
+{
+    ls output/*.txt
+    echo "Configure"
+    echo "benchs = $benchs"
+    echo "classes = $classes"
+    echo "nprocs = $nps"
+}
+
+# clean run log
+rm $runlog
+# run benchmark
+#run_dual
+#run_single
+run_split_bind B 4 0:0,0:1,1:0,1:1
+#run_togather A 4
+#run_cross A 1
+# attach configuation to run log
+show_run_info >> $runlog
+# tar and email the running log, output, this script
+res=output/$(date +%F-%H-%M-%S)-$ben_type-single.tar.bz2
+tar -cjf $res $0 $runlog output/*.txt
+cat $runlog | mail 3090104738@zju.edu.cn -s 'Run finished' -a $res 
+# clean up
+rm output/*.txt

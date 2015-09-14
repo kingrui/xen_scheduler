@@ -1,0 +1,29 @@
+bench-type: mpi
+class: B
+extra: free
+nprocs: 4
+togdirs:
+  ums dino2 sort nomig: 
+    /home/zsy/Project/vnuma/data/183/mpi-dino2-sort-nomig-ht-sel-b-4
+  ums dino2 ewma sd100 nomig:
+    /home/zsy/Project/vnuma/data/183/mpi-dino2-ewmasd100-nomig-ht-sel-b-4
+  ums dino2 ewma pt4 nomig:
+    /home/zsy/Project/vnuma/data/183/mpi-dino2-pt4-nomig-ht-sel-b-4
+  ums dino2 ewma asymig: 
+    /home/zsy/Project/vnuma/data/183/mpi-dino2-asymig-ht-sel-b-4
+  alpha 0.125 nomig:
+    /home/zsy/Project/vnuma/data/183/mpi-dino2-a0.125-nomig-ht-sel-b-4
+  balance nomig:
+    /home/zsy/Project/vnuma/data/183/mpi-dino2-bla-nomig-ht-sel-b-4
+  balance 80 nomig:
+    /home/zsy/Project/vnuma/data/183/mpi-dino2-bla80-nomig-ht-sel-b-4
+  ll 500 mig 128:
+    /home/zsy/Project/vnuma/data/183/mpi-dino2-llmig5-ht-sel-b-4
+  ll 500 mig 512:
+    /home/zsy/Project/vnuma/data/183/mpi-dino2-llmig7-ht-sel-b-4
+outdir:
+  /home/zsy/Project/vnuma/data/183/mpi-sys-ht-sel-b-4
+benchs:
+  - bt
+  - sp
+  - lu

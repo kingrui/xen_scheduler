@@ -1,0 +1,322 @@
+#!/bin/bash
+
+benchs='bt ep ft lu mg sp is cg'
+#benchs='bt lu'
+classes='B'
+nps='4'
+runlog='run.log'
+
+out_name()
+{
+    ben_type='omp'
+    bench=$1
+    class=$2
+    nprocs=$3
+    other=$4
+
+    echo "$ben_type-$bench-$class-$nprocs-$other.txt"
+}
+
+get_pname()
+{
+    bench=$1
+    class=$2
+
+    echo "$bench.$class"
+}
+
+mkbench()
+{
+    bench=$1
+    class=$2
+
+    make clean &> /dev/null
+    make $bench CLASS=$class 2>> $runlog 1> /dev/null
+}
+
+do_run_no_bind()
+{
+    bench=$1
+    class=$2
+    nprocs=$3 
+    pname=$(get_pname $bench $class)
+    out_file=$(out_name $bench $class $nprocs "nobind")
+
+    export OMP_NUM_THREADS=$nprocs
+    bin/$pname &> output/$out_file &
+    taskset -p $! > /dev/stderr
+    wait
+}
+
+do_run_bind()
+{
+    bench=$1
+    class=$2
+    nprocs=$3
+    mask=$4
+    pname=$(get_pname $bench $class)
+    out_file=$(out_name $bench $class $nprocs "bind-socket")
+
+    export OMP_NUM_THREADS=$nprocs
+    echo "Affinity mask: $mask" > output/$out_file
+    taskset $mask bin/$pname 1>> output/$out_file 2>> output/$out_file &
+    taskset -p $! > /dev/stderr
+    wait 
+}
+
+need_make()
+{
+    bench=$1
+    class=$2
+    pname=$(get_pname $bench $class)
+
+    if [ -f bin/$pname ]; then
+        return 1
+    fi
+    return 0
+}
+
+run_single()
+{
+    for bench in $benchs; do
+        for class in $classes; do
+            for np in $nps; do
+                if need_make $bench $class; then
+                    mkbench $bench $class
+                fi
+                echo "running bench=$bench class=$class nprocs=$np" > /dev/stderr
+                do_run_bind $bench $class $np aaaa
+            done
+        done
+    done
+}
+
+count_running()
+{
+    pname=$1
+    pgrep -c $pname
+}
+
+at_least_one_running()
+{
+    bench1=$1
+    bench2=$2
+    
+    if [ $(count_runnig $bench1) -gt '0' ] || [ $(count_runnig $bench2) -gt '0' ]; then
+        return 0
+    fi
+    return 1
+}
+
+# is bench1 need restart
+need_restart()
+{
+    bench1=$1
+    bench2=$2
+
+    #echo "$bench1 $(count_running $bench1)" > /dev/stderr
+    #echo "$bench2 $(count_running $bench2)" > /dev/stderr
+    if [ $bench1 != $bench2 ] && [ $(count_running $bench2) -eq 1 ] && [ $(count_running $bench1) -lt 1 ]; then
+        #echo "Need" > /dev/stderr
+        return 0
+    fi
+    #echo "No need" > /dev/stderr
+    return 1
+}
+
+do_run_cross()
+{
+    obench=$1
+    ibench=$2
+    class=$3
+    nprocs=$4
+    ocpu=$5
+    icpu=$6
+    omem=$7
+    imem=$8
+    ob_pname=$(get_pname $obench $class)
+    ib_pname=$(get_pname $ibench $class)
+    # mem-this-that cpu-this-that
+    ob_out=$(out_name "$obench-$ibench" $class $nprocs "mem$omem-$imem-cpu$ocpu-$icpu")
+    ib_out=$(out_name "$ibench-$obench" $class $nprocs "mem$imem-$omem-cpu$icpu-$ocpu")
+    counter=0
+    export OMP_NUM_THREADS=$nprocs
+
+    numactl --membind=$imem --physcpubind=$((4 + icpu)),$((6 + icpu)) \
+        bin/$ib_pname &> output/$(out_name "$ibench-$obench" $class $nprocs \
+        "mem$imem-$omem-cpu$icpu-$ocpu-$counter") &
+    numactl --membind=$omem --physcpubind=$((0 + ocpu)),$((2 + ocpu)) \
+        bin/$ob_pname &> output/$ob_out &
+
+    sleep 1
+    while [ $(count_running $ob_pname) -ge 1 ]; do
+        if need_restart $ib_pname $ob_pname; then
+            counter=$((counter + 1))
+            echo "Restarting $ib_pname" > /dev/stderr
+            numactl --membind=$imem --physcpubind=$((4 + icpu)),$((6 + icpu)) \
+                bin/$ib_pname &> output/$(out_name "$ibench-$obench" $class \
+                $nprocs "mem$imem-$omem-cpu$icpu-$ocpu-$counter") &
+        fi
+        sleep 1
+    done
+    echo "waiting" > /dev/stderr
+    wait
+}
+
+do_run_dual()
+{
+    obench=$1
+    ibench=$2
+    class=$3
+    nprocs=$4
+    mask=$5
+    flag=0
+    ob_pname=$(get_pname $obench $class)
+    ib_pname=$(get_pname $ibench $class)
+    ob_out=$(out_name "$obench-$ibench" $class $nprocs "bind-socket")
+    ib_out=$(out_name "$ibench-$obench" $class $nprocs "bind-socket")
+    
+    export OMP_NUM_THREADS=$nprocs
+    echo "Affinity mask: $mask" > output/$ob_out
+    taskset $mask bin/$ib_pname &>/dev/null &
+    taskset $mask bin/$ob_pname 1>>output/$ob_out 2>>output/$ob_out & 
+    ID=$!
+    sleep 1
+    while [ $(count_running $ob_pname) -ge 1 ]; do
+        if need_restart $ib_pname $ob_pname; then
+            echo "Restarting $ib_pname" > /dev/stderr
+            taskset $mask bin/$ib_pname &>/dev/null &
+        fi
+        sleep 1
+    done
+    echo "loop ends" > /dev/stderr
+    # wait benchmark
+    echo "waiting $ID" > /dev/stderr
+    wait $ID
+    # clean up
+    test -z $(jobs -p) || kill $(jobs -p)
+}
+
+run_dual()
+{
+    for class in $classes; do
+        for np in $nps; do
+            for obench in $benchs; do
+                for ibench in $benchs; do
+                    if need_make $obench $class; then
+                        mkbench $obench $class
+                    fi
+                    if need_make $ibench $class; then
+                        mkbench $ibench $class
+                    fi
+                    echo "running obench = $obench, ibench = $ibench" > /dev/stderr
+                    do_run_dual $obench $ibench $class $np aaaa
+                done
+            done
+        done
+    done
+}
+
+gen_run_file()
+{
+    class=$1
+    nprocs=$2
+    dst=$3
+    alg=$4
+    touch "$dst"
+    for bench in $benchs; do
+        pname=$(get_pname $bench $class)
+        rundir="/home/user183/NPB3.3/NPB3.3-OMP/bin/"
+        pdir="${rundir}${pname}"
+        out=$(out_name $bench $class $nprocs "clavis-183-$alg")
+        out_dir="/home/user183/NPB3.3/NPB3.3-OMP/output/"
+        out_f="${out_dir}${out}"
+        echo "${bench} 5 ${pdir} > ${out_f}" >> $dst
+        echo "***rundir ${rundir}" >> $dst
+    done
+}
+
+run_togather_cla()
+{
+    alg=$1
+    for class in $classes; do
+        for nprocs in $nps; do
+            run_f="/home/user183/NPB3.3/NPB3.3-OMP/output/run.txt"
+            rm $run_f
+            gen_run_file $class $nprocs $run_f $alg
+            export OMP_NUM_THREADS=$nprocs
+            echo $OMP_NUM_THREADS
+            /home/user183/clavis-src-6.5.4/scheduler.out $alg perf Xeon_E5620_HT \
+                $run_f mt once fixed 0 1 2 3 4 5 6 7 
+        done
+    done
+}
+
+run_togather()
+{
+    class=$1
+    nprocs=$2
+
+    run_seq=$(../rand_perm $benchs)
+    echo "Run seq: $run_seq" >> $runlog
+    for bench in $run_seq; do
+        do_run_no_bind $bench $class $nprocs &
+    done
+    wait
+}
+
+run_cross()
+{
+    class=$1
+    nprocs=$2
+    mem_aff="0 1"
+    cpu_aff="0 1"
+    # Obench is always on cpu node 0
+    ocpu=0
+    for obench in $benchs; do
+        for ibench in $benchs; do
+            for omem in $mem_aff; do
+                for imem in $mem_aff; do
+                    for icpu in $cpu_aff; do
+                        do_run_cross $obench $ibench $class $nprocs $ocpu \
+                            $icpu $omem $imem
+                    done
+                done
+            done
+        done
+    done
+}
+
+show_run_info()
+{
+    ls output/*.txt
+    echo "Configure"
+    echo "benchs = $benchs"
+    echo "classes = $classes"
+    echo "nprocs = $nps"
+}
+
+after_run()
+{
+    # attach configuation to run log
+    show_run_info >> $runlog
+    # tar and email the running log, output, this script
+    res=output/$(date +%F-%H-%M-%S)-omp-cross-A-1-$(hostname).tar.bz2
+    tar -cjf $res $0 $runlog output/*.txt
+    cat $runlog | mail 3090104738@zju.edu.cn -s "$res $classes $nps" -a $res 
+    # clean up
+    rm output/*.txt
+}
+
+# clean run log
+rm $runlog
+touch $runlog
+#trap "after_run; echo 'trapped!'; exit" INT TERM KILL
+# run benchmark
+#run_dual
+#run_single
+#run_togather A 4
+# algs: d, b, a, z, zo, p, c, dino, q, s
+#run_togather_cla p
+run_cross B 2
+after_run

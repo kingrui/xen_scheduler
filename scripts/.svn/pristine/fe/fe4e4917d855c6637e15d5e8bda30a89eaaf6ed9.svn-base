@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require '../common/perf'
+require '../common/matfig'
+require '../common/npb'
+
+if __FILE__ == $0
+    dircom  = ARGV[0]
+    dirtgt  = ARGV[1]
+    outdir  = ARGV[2]
+    
+    benchs = ['blackscholes', 'bodytrack', 'facesim', 'ferret',
+        'fluidanimate', 'freqmine', 'raytrace', 'swaptions', 'vips', 'x264']
+    x = Array.new
+    y = Array.new
+    benchs.each do |bench|
+        hashcom = Perf.parse_stat \
+            "#{dircom}/#{bench}-perf.txt"
+        hashtgt = Perf.parse_stat \
+            "#{dirtgt}/#{bench}-perf.txt"
+        numa_penalty = (Perf.cpi hashcom) / (Perf.cpi hashtgt)
+        mpki = Perf.mpki hashtgt
+        puts mpki
+        x << mpki
+        y << numa_penalty
+    end
+    Matfig.plot x, y, '*', benchs, 'MPKI', 'NUMA penalty', 'numaplot', outdir 
+end

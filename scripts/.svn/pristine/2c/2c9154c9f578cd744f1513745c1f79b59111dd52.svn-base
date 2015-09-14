@@ -1,0 +1,23 @@
+bench-type: mpi
+class: B
+extra: free
+nprocs: 4
+togdirs: 
+  dino3:
+    /home/zsy/Project/vnuma/data/183-kvm-4vcpu-4g/mpi-dino3-mig32-ht-sel-b-4
+  dino3 bala:
+    /home/zsy/Project/vnuma/data/183-kvm-4vcpu-4g/mpi-dino3-bala-ht-sel-b-4
+  dino3 bla0:
+    /home/zsy/Project/vnuma/data/183-kvm-4vcpu-4g/mpi-dino3-bla0-ht-sel-b-4
+  dino3 bla local:
+    /home/zsy/Project/vnuma/data/183-kvm-4vcpu-4g/mpi-dino3-bla1-ht-sel-b-4
+  dino3 bla 2:
+    /home/zsy/Project/vnuma/data/183-kvm-4vcpu-4g/mpi-dino3-bla2-ht-sel-b-4
+  dino3 u300:
+    /home/zsy/Project/vnuma/data/183-kvm-4vcpu-4g/mpi-dino3-bla300-ht-sel-b-4
+outdir:
+  /home/zsy/Project/vnuma/data/183-kvm-4vcpu-4g/mpi-sys-ht-sel-b-4
+benchs:
+  - bt
+  - sp
+  - lu

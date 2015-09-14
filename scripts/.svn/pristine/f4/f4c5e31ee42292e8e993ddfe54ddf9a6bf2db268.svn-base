@@ -1,0 +1,31 @@
+bench-type: omp
+class: B
+extra: free
+nprocs: 4
+togdirs:
+  ums dino2 nomig ht:
+    /home/zsy/Project/vnuma/data/183/omp-dino2-nomig-ht-sel-b-4
+  ums dino2 nomig2 ht:
+    /home/zsy/Project/vnuma/data/183/omp-dino2-nomig2-ht-sel-b-4
+  ums dino2 mt ht:
+    /home/zsy/Project/vnuma/data/183/omp-dino2-mt-ht-sel-b-4
+  ums dino2 sort missrate nomig:
+    /home/zsy/Project/vnuma/data/183/omp-dino2-sort-missrate-nomig-ht-sel-b-4
+  ums dino2 sort tgid nomig:
+    /home/zsy/Project/vnuma/data/183/omp-dino2-sort-tgid-nomig-ht-sel-b-4
+  ums dino2 sort tgid wei nomig:
+    /home/zsy/Project/vnuma/data/183/omp-dino2-sort-tgid-wei-nomig-ht-sel-b-4
+  ums dino2 sd100 nomig: 
+    /home/zsy/Project/vnuma/data/183/omp-dino2-sd100-nomig-ht-sel-b-4
+  numax: 
+    /home/zsy/Project/vnuma/data/183/omp-numax-ht-sel-b-4
+  llmig:
+    /home/zsy/Project/vnuma/data/183/omp-dino2-llmig-ht-sel-b-4 
+
+outdir:
+  /home/zsy/Project/vnuma/data/183/omp-sys-ht-sel-b-4
+benchs:
+  - bt
+  - sp
+  - lu
+

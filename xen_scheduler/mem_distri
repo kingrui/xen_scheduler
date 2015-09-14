@@ -1,0 +1,40 @@
+(XEN) Domain 1 (total: 393216):
+(XEN)     Node 0: 382042
+(XEN)     Node 1: 5578
+(XEN)     Node 2: 0
+(XEN)     Node 3: 5596
+(XEN) Domain 2 (total: 393216):
+(XEN)     Node 0: 113676
+(XEN)     Node 1: 184334
+(XEN)     Node 2: 53226
+(XEN)     Node 3: 41980
+(XEN) Domain 5 (total: 393216):
+(XEN)     Node 0: 6
+(XEN)     Node 1: 101116
+(XEN)     Node 2: 242335
+(XEN)     Node 3: 49759
+(XEN) Domain 6 (total: 393216):
+(XEN)     Node 0: 2
+(XEN)     Node 1: 118783
+(XEN)     Node 2: 38696
+(XEN)     Node 3: 235735
+(XEN) Domain 7 (total: 393216):
+(XEN)     Node 0: 17
+(XEN)     Node 1: 183409
+(XEN)     Node 2: 183409
+(XEN)     Node 3: 26381
+(XEN) Domain 8 (total: 393216):
+(XEN)     Node 0: 222543
+(XEN)     Node 1: 45690
+(XEN)     Node 2: 27976
+(XEN)     Node 3: 97007
+(XEN) Domain 11 (total: 393216):
+(XEN)     Node 0: 44360
+(XEN)     Node 1: 9247
+(XEN)     Node 2: 169805
+(XEN)     Node 3: 169804
+(XEN) Domain 12 (total: 393216):
+(XEN)     Node 0: 129400
+(XEN)     Node 1: 196105
+(XEN)     Node 2: 32665
+(XEN)     Node 3: 35046
